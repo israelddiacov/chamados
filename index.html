@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diacov — Suporte Técnico & Soluções em TI Remota</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen overflow-x-hidden selection:bg-blue-600 selection:text-white">
+
+  <!-- Container de Notificações -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-md"></div>
+
+  <!-- Cabeçalho Principal Profissional (Fundo Branco) -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm text-2xl font-bold">
+          💻
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            Diacov — Suporte Técnico & TI Remota
+          </h1>
+          <p class="text-sm sm:text-base text-slate-600">
+            Atendimento especializado para empresas com rapidez, segurança e hora marcada
+          </p>
+        </div>
+      </div>
+
+      <!-- Navegação de Perfil -->
+      <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+        <button id="navBtnCliente" type="button"
+          class="px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-blue-600 text-white shadow-sm">
+          <span>🧑‍💼</span>
+          <span>Área do Cliente</span>
+        </button>
+        <button id="navBtnAdmin" type="button"
+          class="px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-700 hover:text-slate-900">
+          <span>🔒</span>
+          <span>Área Técnica</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+
+    <!-- ======================================================================
+         VISÃO 1: ÁREA DO CLIENTE (VITRINE + LOGIN + CALENDÁRIO INTERATIVO)
+         ====================================================================== -->
+    <section id="sectionClienteWrapper" class="space-y-8">
+
+      <!-- TELA INICIAL ANTES DA SENHA: BANNERS SOBRE OS TRABALHOS + QUADRO DE ACESSO -->
+      <div id="clientLockScreen" class="space-y-8 animate-spring-up">
+
+        <!-- Banner Principal de Apresentação Comercial -->
+        <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 rounded-2xl p-8 sm:p-10 text-white shadow-md">
+          <div class="max-w-3xl space-y-4">
+            <span class="inline-block px-3.5 py-1 rounded-full bg-white/20 text-white text-sm font-bold tracking-wide">
+              ATENDIMENTO 100% REMOTO PARA EMPRESAS
+            </span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight">
+              Instalação de Programas, Configuração de E-mails e Solução de Problemas no Windows sem Parar sua Equipe
+            </h2>
+            <p class="text-base sm:text-lg text-blue-100 leading-relaxed">
+              Sem espera por deslocamento técnico. Conectamos remotamente no computador do colaborador no horário combinado e deixamos tudo instalado, configurado e pronto para trabalhar.
+            </p>
+          </div>
+        </div>
+
+        <!-- Grade: 3 Banners de Serviços + Quadro de Senha de Acesso -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <!-- Coluna Esquerda (7 colunas): Banners dos Trabalhos Realizados -->
+          <div class="lg:col-span-7 space-y-5">
+            <h3 class="text-xl font-extrabold text-slate-900">
+              Conheça os Serviços que Realizamos Remotamente:
+            </h3>
+
+            <!-- Banner 1: Engenharia e Design -->
+            <div class="corp-banner-card p-6 flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center text-2xl shrink-0">
+                📐
+              </div>
+              <div class="space-y-1.5">
+                <h4 class="text-lg font-bold text-slate-900">
+                  Programas de Engenharia, Arquitetura & Design
+                </h4>
+                <p class="text-base text-slate-600 leading-relaxed">
+                  Instalação e configuração completa de <strong>Autodesk AutoCAD</strong>, <strong>Autodesk Revit</strong> (incluindo bibliotecas e templates BIM), <strong>Adobe Photoshop</strong> e <strong>CorelDraw</strong>, utilizando as licenças originais da sua empresa.
+                </p>
+              </div>
+            </div>
+
+            <!-- Banner 2: Office e E-mail -->
+            <div class="corp-banner-card p-6 flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center text-2xl shrink-0">
+                📧
+              </div>
+              <div class="space-y-1.5">
+                <h4 class="text-lg font-bold text-slate-900">
+                  Pacote Office, Utilitários & E-mail Corporativo
+                </h4>
+                <p class="text-base text-slate-600 leading-relaxed">
+                  Instalação ou reinstalação de <strong>Microsoft Office</strong> (Word, Excel, PowerPoint, Outlook), <strong>Project</strong>, <strong>Visio</strong> e <strong>Adobe Acrobat Reader</strong>, além da configuração de contas de e-mail corporativo com <strong>assinatura padronizada</strong>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Banner 3: Manutenção do Windows -->
+            <div class="corp-banner-card p-6 flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-2xl shrink-0">
+                🛠️
+              </div>
+              <div class="space-y-1.5">
+                <h4 class="text-lg font-bold text-slate-900">
+                  Correção de Problemas no Windows & Impressoras
+                </h4>
+                <p class="text-base text-slate-600 leading-relaxed">
+                  Diagnóstico e solução de lentidão, erros de sistema, atualizações, backup/migração de arquivos de usuário e configuração de <strong>impressoras e scanners em rede</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Direita (5 colunas): Quadro de Senha para Agendar Chamado -->
+          <div class="lg:col-span-5">
+            <div class="corp-card p-7 sm:p-8 space-y-6 border-2 border-blue-100">
+              <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center text-2xl shrink-0">
+                  🔑
+                </div>
+                <div>
+                  <span class="text-sm font-bold text-blue-600 uppercase tracking-wide">Agendamento Online</span>
+                  <h3 class="text-2xl font-extrabold text-slate-900">Acessar Portal do Cliente</h3>
+                </div>
+              </div>
+
+              <p class="text-base text-slate-600 leading-relaxed">
+                Para visualizar o calendário de disponibilidade e agendar um atendimento remoto, digite a senha de acesso da sua empresa:
+              </p>
+
+              <form id="formClientLogin" class="space-y-4">
+                <div>
+                  <label for="clientPasswordInput" class="block text-base font-bold text-slate-800 mb-2">
+                    Senha de Acesso da Empresa
+                  </label>
+                  <input id="clientPasswordInput" type="password" required placeholder="Digite a senha de acesso..."
+                    class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition" />
+                </div>
+
+                <p id="clientLoginError" class="hidden text-sm text-rose-700 font-semibold bg-rose-50 border border-rose-200 rounded-xl p-3.5"></p>
+
+                <button type="submit"
+                  class="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base shadow-sm transition">
+                  Entrar e Ver Calendário ➔
+                </button>
+              </form>
+
+              <div class="pt-4 border-t border-slate-200 text-sm text-slate-600">
+                Atendimento exclusivo para empresas conveniadas. Caso não possua a senha, solicite ao responsável do seu setor.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TELA DO CLIENTE DESBLOQUEADA: CALENDÁRIO DE DISPONIBILIDADE (MOSTRA HORÁRIOS OCUPADOS) -->
+      <div id="clientUnlockedContent" class="hidden space-y-6 animate-spring-up">
+
+        <!-- Barra de Instrução para o Cliente -->
+        <div class="corp-card px-6 py-4 flex flex-wrap items-center justify-between gap-4 bg-blue-50/70 border-blue-200">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📅</span>
+            <div>
+              <h2 class="text-lg font-extrabold text-slate-900">
+                Selecione um Dia no Calendário para Agendar seu Atendimento
+              </h2>
+              <p class="text-sm sm:text-base text-slate-600">
+                Os horários em vermelho indicam janelas já ocupadas. Clique no dia desejado para abrir o agendamento.
+              </p>
+            </div>
+          </div>
+          <button id="btnLogoutClient" type="button"
+            class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-sm font-bold transition">
+            Sair
+          </button>
+        </div>
+
+        <!-- Calendário Mensal do Cliente (Igual ao da Área Técnica, Exibindo Horários Ocupados) -->
+        <div class="corp-card p-6 sm:p-8 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
+            <div>
+              <h3 id="clientCalendarMonthTitle" class="text-2xl font-extrabold text-slate-900">Mês / Ano</h3>
+              <p class="text-base text-slate-600 mt-0.5">
+                Clique em qualquer dia abaixo para escolher seu horário e os serviços desejados
+              </p>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="hidden sm:flex items-center gap-4 mr-4 text-sm font-semibold">
+                <span class="flex items-center gap-1.5 text-emerald-700">
+                  <span class="w-3 h-3 rounded-full bg-emerald-500"></span> Horários Livres
+                </span>
+                <span class="flex items-center gap-1.5 text-rose-700">
+                  <span class="w-3 h-3 rounded-full bg-rose-500"></span> Horário Ocupado
+                </span>
+              </div>
+              <button id="btnClientCalPrev" type="button"
+                class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition">
+                ◀ Mês Anterior
+              </button>
+              <button id="btnClientCalNext" type="button"
+                class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition">
+                Próximo Mês ▶
+              </button>
+            </div>
+          </div>
+
+          <!-- Cabeçalho dos Dias da Semana -->
+          <div class="grid grid-cols-7 gap-2 text-center text-sm font-bold text-slate-600 uppercase">
+            <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+          </div>
+
+          <!-- Células do Calendário do Cliente -->
+          <div id="clientCalendarGridCells" class="grid grid-cols-7 gap-2.5"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODAL DO CLIENTE EM 3 PÁGINAS (WIZARD) + CONFIRMAÇÃO E ENVIO DIRETO
+         ====================================================================== -->
+    <div id="modalClientWizard" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+      <div class="corp-card max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl animate-spring-up my-8">
+
+        <!-- Topo do Modal com Indicador de Etapas (Página 1, 2, 3) -->
+        <div id="wizardHeaderBar" class="space-y-4 border-b border-slate-200 pb-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <span id="wizardStepBadge" class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-bold">
+                Etapa 1 de 3
+              </span>
+              <h3 id="wizardStepTitle" class="text-2xl font-extrabold text-slate-900 mt-2">
+                Sugestão de Dia e Horário
+              </h3>
+            </div>
+            <button id="btnCloseClientWizard" type="button"
+              class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 text-lg font-bold flex items-center justify-center">
+              ✕
+            </button>
+          </div>
+
+          <!-- Barra de Progresso Visual -->
+          <div class="grid grid-cols-3 gap-2">
+            <div id="wizProg1" class="h-2 rounded-full bg-blue-600 transition-all"></div>
+            <div id="wizProg2" class="h-2 rounded-full bg-slate-200 transition-all"></div>
+            <div id="wizProg3" class="h-2 rounded-full bg-slate-200 transition-all"></div>
+          </div>
+        </div>
+
+        <form id="formCreateTicket" class="space-y-6" novalidate>
+
+          <!-- ================================================================
+               PÁGINA 1 DO MODAL: SUGESTÃO DE DIA E HORÁRIO + HORÁRIOS OCUPADOS
+               ================================================================ -->
+          <div id="wizardPage1" class="space-y-5">
+            <!-- Quadro mostrando os horários já ocupados no dia clicado -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span class="block text-sm font-bold text-slate-800">
+                📌 Status de horários neste dia (<span id="wizardSelectedDateLabel" class="text-blue-700"></span>):
+              </span>
+              <div id="wizardDayBusySlotsList" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="space-y-4">
+              <div>
+                <label for="inputSugestao1" class="block text-base font-bold text-slate-800 mb-2">
+                  1ª Sugestão de Dia e Horário <span class="text-rose-600">*</span>
+                </label>
+                <input id="inputSugestao1" type="datetime-local" required
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-semibold focus:bg-white focus:outline-none focus:border-blue-600" />
+              </div>
+
+              <div>
+                <label for="inputSugestao2" class="block text-base font-bold text-slate-800 mb-2">
+                  2ª Sugestão de Horário (Opcional, caso o 1º esteja ocupado)
+                </label>
+                <input id="inputSugestao2" type="datetime-local"
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base focus:bg-white focus:outline-none focus:border-blue-600" />
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-blue-50 border border-blue-200">
+              <p id="windowReservePreview" class="text-base text-blue-900 font-medium leading-relaxed">
+                Escolha o horário desejado para continuar.
+              </p>
+            </div>
+
+            <div id="scheduleConflictWarning" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-base text-rose-800 font-semibold"></div>
+
+            <div class="flex justify-end pt-2">
+              <button id="btnWizardNext1" type="button"
+                class="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base shadow-sm transition">
+                Avançar para Serviços ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- ================================================================
+               PÁGINA 2 DO MODAL: SERVIÇOS, TEXTO LIVRE E AVISO SOBRE LICENÇAS
+               ================================================================ -->
+          <div id="wizardPage2" class="hidden space-y-5">
+            <div class="space-y-3 min-w-0">
+              <label for="selectServiceCatalog" class="block text-base font-bold text-slate-800">
+                Selecione o serviço ou programa na lista:
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 min-w-0">
+                <div class="sm:col-span-8 min-w-0">
+                  <select id="selectServiceCatalog"
+                    class="w-full max-w-full min-w-0 truncate px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium focus:bg-white focus:outline-none focus:border-blue-600">
+                  </select>
+                </div>
+                <div class="sm:col-span-4 min-w-0">
+                  <button id="btnAddService" type="button"
+                    class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base transition shadow-sm">
+                    + Adicionar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <span class="block text-sm font-semibold text-slate-700">
+                Ou clique direto nos programas/serviços abaixo para adicionar:
+              </span>
+              <div id="quickServicesContainer" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+              <span class="block text-sm font-bold text-slate-700 mb-2">
+                Serviços incluídos neste chamado:
+              </span>
+              <div id="selectedServicesChips" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div>
+              <label for="inputDescricaoChamado" class="block text-base font-bold text-slate-800 mb-2">
+                Descrição do Chamado (espaço livre abaixo para observações adicionais):
+              </label>
+              <textarea id="inputDescricaoChamado" rows="5"
+                placeholder="Os serviços escolhidos são montados aqui automaticamente. Você pode acrescentar qualquer detalhe adicional abaixo..."
+                class="w-full max-w-full p-4 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base leading-relaxed focus:bg-white focus:outline-none focus:border-blue-600"></textarea>
+            </div>
+
+            <!-- Aviso sobre Licenças -->
+            <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-sm sm:text-base leading-relaxed">
+              <strong>⚖️ Aviso sobre Licenças de Programas:</strong> Nosso serviço refere-se exclusivamente à mão de obra técnica de instalação, configuração e suporte remoto. As <strong>licenças originais</strong> e chaves de ativação dos softwares (Office, Project, Visio, AutoCAD, Revit, Adobe, CorelDraw, etc.) pertencem e são fornecidas pela sua empresa.
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+              <button id="btnWizardBack2" type="button"
+                class="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-base transition">
+                ⬅ Voltar
+              </button>
+              <button id="btnWizardNext2" type="button"
+                class="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base shadow-sm transition">
+                Avançar para Identificação ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- ================================================================
+               PÁGINA 3 DO MODAL: IDENTIFICAÇÃO, CONTATO E BOTÃO CONCLUIR
+               ================================================================ -->
+          <div id="wizardPage3" class="hidden space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="min-w-0">
+                <label for="selectEmpresaCliente" class="block text-base font-bold text-slate-800 mb-2">
+                  Sua Empresa <span class="text-blue-600">*</span>
+                </label>
+                <select id="selectEmpresaCliente" required
+                  class="w-full max-w-full min-w-0 truncate px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium focus:bg-white focus:outline-none focus:border-blue-600">
+                </select>
+              </div>
+
+              <div class="min-w-0">
+                <label for="inputWhatsapp" class="block text-base font-bold text-slate-800 mb-2">
+                  Seu WhatsApp (Obrigatório) <span class="text-rose-600">*</span>
+                </label>
+                <input id="inputWhatsapp" type="tel" required placeholder="(11) 99999-9999"
+                  class="w-full max-w-full min-w-0 px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-semibold placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
+              </div>
+
+              <div class="min-w-0">
+                <label for="inputNomeCliente" class="block text-base font-bold text-slate-800 mb-2">
+                  Seu Nome e Setor <span class="text-blue-600">*</span>
+                </label>
+                <input id="inputNomeCliente" type="text" required placeholder="Ex: Marcos (Engenharia)"
+                  class="w-full max-w-full min-w-0 px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 min-w-0">
+                <div class="min-w-0">
+                  <label for="selectFerramentaRemota" class="block text-base font-bold text-slate-800 mb-2">
+                    Acesso Remoto
+                  </label>
+                  <select id="selectFerramentaRemota"
+                    class="w-full max-w-full min-w-0 truncate px-3 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base focus:bg-white focus:outline-none focus:border-blue-600">
+                    <option value="AnyDesk">AnyDesk</option>
+                    <option value="TeamViewer">TeamViewer</option>
+                    <option value="RustDesk">RustDesk</option>
+                    <option value="Google Meet">Google Meet</option>
+                  </select>
+                </div>
+                <div class="min-w-0">
+                  <label for="inputIdRemoto" class="block text-base font-bold text-slate-800 mb-2">
+                    ID (Opcional)
+                  </label>
+                  <input id="inputIdRemoto" type="text" placeholder="Se tiver"
+                    class="w-full max-w-full min-w-0 px-3 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Caixa de Pergunta de Confirmação ("Tem certeza?") -->
+            <div id="wizardConfirmPromptBox" class="hidden p-5 rounded-xl bg-blue-50 border-2 border-blue-300 space-y-4">
+              <div class="space-y-1">
+                <h4 class="text-lg font-extrabold text-blue-950">
+                  Tem certeza que deseja confirmar e enviar este chamado?
+                </h4>
+                <p id="wizardConfirmSummaryText" class="text-base text-blue-900 leading-relaxed"></p>
+              </div>
+              <div class="flex flex-wrap items-center justify-end gap-3">
+                <button id="btnCancelConfirmTicket" type="button"
+                  class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-bold text-sm">
+                  Revisar Dados
+                </button>
+                <button id="btnFinalConfirmSend" type="button"
+                  class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-base shadow-md transition">
+                  ✓ Sim, Confirmar e Enviar Agora
+                </button>
+              </div>
+            </div>
+
+            <div id="wizardStep3FooterBtns" class="flex items-center justify-between pt-2">
+              <button id="btnWizardBack3" type="button"
+                class="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-base transition">
+                ⬅ Voltar
+              </button>
+              <button id="btnWizardPreConclude" type="button"
+                class="px-7 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-base shadow-md transition">
+                ✓ Concluir Agendamento
+              </button>
+            </div>
+          </div>
+
+          <!-- ================================================================
+               TELA FINAL DO MODAL: SOMENTE A MENSAGEM CONFIRMANDO O ENVIO
+               ================================================================ -->
+          <div id="wizardPageSuccessFinal" class="hidden py-8 text-center space-y-4">
+            <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl font-bold">
+              ✓
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-900">
+              Chamado Enviado com Sucesso!
+            </h3>
+            <p id="finalSentMessageText" class="text-base sm:text-lg text-slate-600 max-w-lg mx-auto leading-relaxed">
+              Sua solicitação de agendamento foi registrada na agenda técnica e enviada para o WhatsApp do suporte. Você receberá o retorno de confirmação pelo seu WhatsApp.
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         VISÃO 2: PAINEL ADMINISTRATIVO (PROTEGIDO POR SENHA EXCLUSIVA DIFERENTE)
+         ====================================================================== -->
+    <section id="sectionAdminWrapper" class="hidden space-y-6">
+
+      <!-- Tela de Senha do Administrador -->
+      <div id="adminLockScreen" class="max-w-lg mx-auto mt-6 animate-spring-up">
+        <div class="corp-card p-8 space-y-6">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center text-2xl">
+              🛡️
+            </div>
+            <div>
+              <span class="text-sm font-bold uppercase text-slate-500">Acesso Restrito ao Titular</span>
+              <h2 class="text-2xl font-extrabold text-slate-900">Painel de Controle & Faturamento</h2>
+            </div>
+          </div>
+
+          <p class="text-base text-slate-600">
+            Digite sua senha exclusiva de Administrador (validada via hash embaralhado do arquivo <code class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">acessos_seguranca.csv</code>).
+          </p>
+
+          <form id="formAdminLogin" class="space-y-4">
+            <div>
+              <label for="adminPasswordInput" class="block text-base font-bold text-slate-800 mb-2">
+                Senha do Administrador
+              </label>
+              <input id="adminPasswordInput" type="password" required placeholder="Digite sua senha de administrador..."
+                class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-slate-900" />
+            </div>
+            <p id="adminLoginError" class="hidden text-sm text-rose-700 font-semibold bg-rose-50 border border-rose-200 rounded-xl p-3.5"></p>
+            <button type="submit"
+              class="w-full py-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-base shadow-sm transition">
+              Abrir Painel Administrativo ➔
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Conteúdo Desbloqueado do Administrador -->
+      <div id="adminUnlockedContent" class="hidden space-y-6">
+
+        <!-- Menu de Abas do Administrador -->
+        <div class="corp-card p-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" data-admin-tab="calendario"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-blue-600 text-white shadow-sm">
+              <span>📅</span>
+              <span>Calendário & Chamados (+15m Reserva)</span>
+            </button>
+            <button type="button" data-admin-tab="cobranca"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-slate-100 text-slate-700 hover:bg-slate-200">
+              <span>💰</span>
+              <span>Fechamento Mensal & Relatório</span>
+            </button>
+            <button type="button" data-admin-tab="catalogo"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-slate-100 text-slate-700 hover:bg-slate-200">
+              <span>📂</span>
+              <span>Empresas & Preços (.CSV Drive)</span>
+            </button>
+            <button type="button" data-admin-tab="seguranca"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-slate-100 text-slate-700 hover:bg-slate-200">
+              <span>🔐</span>
+              <span>Senhas Embaralhadas & Conta Google</span>
+            </button>
+          </div>
+
+          <button id="btnLogoutAdmin" type="button"
+            class="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-sm font-bold transition">
+            🔒 Bloquear Painel
+          </button>
+        </div>
+
+        <!-- ABA ADMIN 1: CALENDÁRIO E LISTA DE CHAMADOS -->
+        <div id="adminTab_calendario" class="space-y-6 animate-spring-up">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="corp-card p-5 flex items-center justify-between">
+              <div>
+                <span class="text-sm font-semibold text-slate-500">Convites Pendentes</span>
+                <p id="statPendingCount" class="text-3xl font-extrabold text-amber-600 mt-1">0</p>
+              </div>
+              <span class="text-3xl">⏳</span>
+            </div>
+            <div class="corp-card p-5 flex items-center justify-between">
+              <div>
+                <span class="text-sm font-semibold text-slate-500">Aceitos / Concluídos no Mês</span>
+                <p id="statConfirmedCount" class="text-3xl font-extrabold text-emerald-600 mt-1">0</p>
+              </div>
+              <span class="text-3xl">✅</span>
+            </div>
+            <div class="corp-card p-5 flex items-center justify-between">
+              <div>
+                <span class="text-sm font-semibold text-slate-500">Faturamento Previsto no Mês</span>
+                <p id="statRevenueMonth" class="text-3xl font-extrabold text-blue-600 mt-1">R$ 0,00</p>
+              </div>
+              <span class="text-3xl">📈</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Calendário Mensal -->
+            <div class="lg:col-span-7 corp-card p-6 space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 id="calendarMonthTitle" class="text-xl font-extrabold text-slate-900">Mês / Ano</h3>
+                  <p class="text-sm text-slate-600">Clique em um dia para filtrar os compromissos (já calculando 15 min de reserva)</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="btnCalPrev" type="button" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold">◀ Ant.</button>
+                  <button id="btnCalNext" type="button" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold">Próx. ▶</button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-500 uppercase">
+                <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+              </div>
+
+              <div id="calendarGridCells" class="grid grid-cols-7 gap-2"></div>
+            </div>
+
+            <!-- Lista de Chamados -->
+            <div class="lg:col-span-5 space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-extrabold text-slate-900">Chamados & Horários</h3>
+                  <p id="calendarFilterNotice" class="text-sm text-blue-600 font-medium">Exibindo todos os chamados recentes</p>
+                </div>
+                <button id="btnCalClearFilter" type="button" class="hidden text-sm px-3 py-1.5 rounded-lg bg-slate-200 text-slate-800 font-bold">
+                  Mostrar Todos
+                </button>
+              </div>
+
+              <div id="adminTicketsListContainer" class="space-y-4 max-h-[700px] overflow-y-auto pr-1"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA ADMIN 2: FECHAMENTO MENSAL, PLANILHA DE 12 MESES E RELATÓRIO HTML -->
+        <div id="adminTab_cobranca" class="hidden space-y-6 animate-spring-up">
+          <div class="corp-card p-6 sm:p-7 space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
+              <div>
+                <h3 class="text-xl font-extrabold text-slate-900">Fechamento Mensal por Cliente & Sincronização Google Drive</h3>
+                <p class="text-base text-slate-600">
+                  Filtra os agendamentos aceitos/concluídos, preenche a aba do mês (dias 1 a 31) na Planilha Anual e gera o Relatório HTML/PDF.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-2.5">
+                <button id="btnOpenPrintReport" type="button"
+                  class="px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-extrabold shadow-sm">
+                  🖨️ Abrir Relatório HTML / Imprimir PDF
+                </button>
+                <button id="btnSyncDriveSheet" type="button"
+                  class="px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition">
+                  📊 Preencher Planilha de 12 Meses no Drive
+                </button>
+                <button id="btnSaveReportToDrive" type="button"
+                  class="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 text-sm font-bold transition">
+                  💾 Salvar Relatório HTML no Drive
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Empresa Cliente</label>
+                <select id="billingCompany" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm font-semibold"></select>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Mês de Referência</label>
+                <select id="billingMonth" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm font-semibold">
+                  <option value="0">Janeiro</option><option value="1">Fevereiro</option><option value="2">Março</option>
+                  <option value="3">Abril</option><option value="4">Maio</option><option value="5">Junho</option>
+                  <option value="6">Julho</option><option value="7">Agosto</option><option value="8">Setembro</option>
+                  <option value="9">Outubro</option><option value="10">Novembro</option><option value="11">Dezembro</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Ano</label>
+                <input id="billingYear" type="number" value="2026" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm font-semibold" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Modo de Cobrança</label>
+                <select id="billingMode" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm font-semibold">
+                  <option value="dificuldade">Pela Dificuldade do Serviço (CSV)</option>
+                  <option value="fixo">Valor Fixo por Atendimento (ex: R$ 100)</option>
+                </select>
+              </div>
+              <div id="billingFlatInputWrapper" class="hidden">
+                <label class="block text-sm font-bold text-emerald-700 mb-1.5">Valor Unitário Fixo (R$)</label>
+                <input id="billingFlatValue" type="number" step="5" value="100" class="w-full px-3.5 py-2.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm font-bold" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <span class="text-sm text-slate-600">Total de Chamados Aceitos</span>
+                <p id="billStatCount" class="text-2xl font-extrabold text-slate-900 mt-1">0 atendimento(s)</p>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <span class="text-sm text-slate-600">Regra Aplicada</span>
+                <p id="billStatFormula" class="text-base font-bold text-blue-700 mt-1.5">—</p>
+              </div>
+              <div class="p-4 rounded-xl bg-blue-50 border border-blue-200">
+                <span class="text-sm text-blue-800 font-semibold">Valor Total a Cobrar</span>
+                <p id="billStatTotal" class="text-2xl font-extrabold text-blue-900 mt-0.5">R$ 0,00</p>
+              </div>
+            </div>
+
+            <!-- Tabela de Chamados do Mês -->
+            <div class="space-y-2">
+              <h4 class="text-base font-bold text-slate-800">1. Chamados Confirmados / Realizados no Mês</h4>
+              <div class="overflow-x-auto rounded-xl border border-slate-200">
+                <table class="w-full text-left">
+                  <thead class="bg-slate-100 text-xs uppercase text-slate-600 font-bold">
+                    <tr>
+                      <th class="py-3 px-4">Chamado</th>
+                      <th class="py-3 px-4">Data / Janela (+15m)</th>
+                      <th class="py-3 px-4">Colaborador / Empresa</th>
+                      <th class="py-3 px-4">Serviços</th>
+                      <th class="py-3 px-4 text-right">Valor</th>
+                    </tr>
+                  </thead>
+                  <tbody id="billingItemsPreviewBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Espelho dos Dias 1 a 31 -->
+            <div class="space-y-2">
+              <h4 class="text-base font-bold text-slate-800">2. Espelho Diário da Aba do Mês (Dias 1 a 31 nas Linhas)</h4>
+              <div class="max-h-80 overflow-y-auto rounded-xl border border-slate-200">
+                <table class="w-full text-left">
+                  <thead class="bg-slate-100 text-xs uppercase text-slate-600 font-bold sticky top-0">
+                    <tr>
+                      <th class="py-2.5 px-4">Dia do Mês</th>
+                      <th class="py-2.5 px-4 text-center">Qtd.</th>
+                      <th class="py-2.5 px-4">Clientes Atendidos</th>
+                      <th class="py-2.5 px-4">Serviços</th>
+                      <th class="py-2.5 px-4 text-right">Total do Dia</th>
+                    </tr>
+                  </thead>
+                  <tbody id="billingDailySheetBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA ADMIN 3: CATÁLOGO CSV NO GOOGLE DRIVE -->
+        <div id="adminTab_catalogo" class="hidden space-y-6 animate-spring-up">
+          <div class="corp-card p-6 sm:p-7 space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
+              <div>
+                <h3 class="text-xl font-extrabold text-slate-900">Gerenciar `empresas.csv` e `servicos_valores.csv` no Google Drive</h3>
+                <p class="text-base text-slate-600">
+                  Os preços abaixo são usados para o cálculo de cobrança e nunca aparecem na tela dos funcionários.
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button id="btnSaveCsvsDrive" type="button"
+                  class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-sm">
+                  ☁️ Salvar CSVs na Pasta do Google Drive
+                </button>
+                <button id="btnDownloadEmpresasCsv" type="button"
+                  class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold">
+                  ⬇️ Baixar empresas.csv
+                </button>
+                <button id="btnDownloadServicosCsv" type="button"
+                  class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold">
+                  ⬇️ Baixar servicos_valores.csv
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <!-- Empresas -->
+              <div class="lg:col-span-5 space-y-4">
+                <h4 class="text-base font-bold text-slate-900">🏢 Empresas Cadastradas (`empresas.csv`)</h4>
+                <form id="formAddCompany" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                  <input id="inputNewCompanyName" type="text" required placeholder="Nome da empresa..."
+                    class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-sm text-slate-900" />
+                  <div class="flex gap-2">
+                    <input id="inputNewCompanyResp" type="text" placeholder="Setor / Contato"
+                      class="flex-1 px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-sm text-slate-900" />
+                    <button type="submit" class="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">
+                      + Adicionar
+                    </button>
+                  </div>
+                </form>
+
+                <div class="overflow-hidden rounded-xl border border-slate-200">
+                  <table class="w-full text-left">
+                    <thead class="bg-slate-100 text-xs uppercase text-slate-600 font-bold">
+                      <tr>
+                        <th class="py-2.5 px-3">ID</th>
+                        <th class="py-2.5 px-3">Empresa</th>
+                        <th class="py-2.5 px-3">Setor</th>
+                        <th class="py-2.5 px-3 text-right">Ação</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminCompaniesTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Serviços e Preços -->
+              <div class="lg:col-span-7 space-y-4">
+                <h4 class="text-base font-bold text-slate-900">🛠️ Tabela de Preços por Dificuldade (`servicos_valores.csv`)</h4>
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                  <table class="w-full text-left">
+                    <thead class="bg-slate-100 text-xs uppercase text-slate-600 font-bold">
+                      <tr>
+                        <th class="py-2.5 px-3">Cód.</th>
+                        <th class="py-2.5 px-3">Serviço</th>
+                        <th class="py-2.5 px-3">Dificuldade</th>
+                        <th class="py-2.5 px-3 text-center">Duração</th>
+                        <th class="py-2.5 px-3 text-right">Valor (R$)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminServicesTableBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA ADMIN 4: SEGURANÇA (acessos_seguranca.csv NO DRIVE) E CONEXÃO GOOGLE -->
+        <div id="adminTab_seguranca" class="hidden space-y-6 animate-spring-up">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Alterar Senhas e Gravar Embaralhadas no acessos_seguranca.csv -->
+            <div class="corp-card p-6 sm:p-7 space-y-4">
+              <h3 class="text-lg font-extrabold text-slate-900">
+                🔑 Senhas Embaralhadas (`acessos_seguranca.csv`)
+              </h3>
+              <p class="text-base text-slate-600 leading-relaxed">
+                Nenhuma senha fica em texto aberto no código. Ao alterar abaixo, o sistema gera um novo código embaralhado (<em>Salt + Hash SHA-256</em>) e salva no arquivo <code class="bg-slate-100 px-1.5 py-0.5 rounded">acessos_seguranca.csv</code> do seu Google Drive.
+              </p>
+
+              <form id="formUpdatePasswords" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha da Área do Cliente</label>
+                  <input id="inputNewClientPass" type="password" required placeholder="Digite a nova senha dos clientes..."
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha do Administrador (Diferente da do Cliente)</label>
+                  <input id="inputNewAdminPass" type="password" required placeholder="Digite sua nova senha de administrador..."
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
+                </div>
+                <div class="flex flex-wrap gap-2 pt-1">
+                  <button type="submit"
+                    class="flex-1 py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition">
+                    Embaralhar e Salvar no Google Drive
+                  </button>
+                  <button id="btnDownloadSecurityCsv" type="button"
+                    class="py-3.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm transition">
+                    ⬇️ Baixar acessos_seguranca.csv
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Conexão Google Workspace Privada -->
+            <div class="corp-card p-6 sm:p-7 space-y-4">
+              <h3 class="text-lg font-extrabold text-slate-900">
+                ☁️ Conexão Privada Google Drive & Agenda
+              </h3>
+              <p class="text-base text-slate-600 leading-relaxed">
+                Estes dados ficam protegidos localmente no seu navegador e não ficam expostos no repositório público do GitHub Pages.
+              </p>
+
+              <form id="formSaveCloudConfig" class="space-y-3.5">
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1">Sua Conta Google (Agenda & Drive)</label>
+                  <input id="cfgOwnerEmail" type="email" placeholder="Seu e-mail Google..."
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1">URL do seu Google Apps Script (Web App)</label>
+                  <input id="cfgGasUrl" type="url" placeholder="https://script.google.com/macros/s/.../exec"
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm" />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-sm font-bold text-slate-800 mb-1">Seu WhatsApp (Com DDI 55)</label>
+                    <input id="cfgOwnerWhatsapp" type="text" placeholder="Ex: 5511999999999"
+                      class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold text-slate-800 mb-1">API Key CallMeBot (Opcional)</label>
+                    <input id="cfgCallmebotKey" type="text" placeholder="Aviso automático"
+                      class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm" />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1">Chave PIX para o Relatório de Cobrança</label>
+                  <input id="cfgPixKey" type="text" placeholder="Informe sua chave PIX para o relatório..."
+                    class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-sm" />
+                </div>
+                <button type="submit"
+                  class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition">
+                  Salvar Configuração Privada
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scripts Modulares -->
+  <script src="assets/js/security.js"></script>
+  <script src="assets/js/catalog.js"></script>
+  <script src="assets/js/scheduler.js"></script>
+  <script src="assets/js/google_integration.js"></script>
+  <script src="assets/js/whatsapp.js"></script>
+  <script src="assets/js/billing.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

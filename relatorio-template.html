@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório de Cobrança Mensal - Sistema de Chamados Diacov</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen py-8 px-4">
+  <div id="reportContainer" class="max-w-5xl mx-auto"></div>
+
+  <script src="assets/js/security.js"></script>
+  <script src="assets/js/catalog.js"></script>
+  <script src="assets/js/scheduler.js"></script>
+  <script src="assets/js/billing.js"></script>
+  <script>
+    (function renderReportPage() {
+      const params = new URLSearchParams(window.location.search);
+      const now = new Date();
+      const year = Number(params.get('year')) || now.getFullYear();
+      const month = params.get('month') !== null ? Number(params.get('month')) : now.getMonth();
+      const company = params.get('company') || 'RFranco Engenharia';
+      const mode = params.get('mode') || 'dificuldade';
+      const flat = Number(params.get('flat')) || 100;
+
+      const data = BillingManager.generateMonthlyBillingData({
+        year,
+        monthZeroBased: month,
+        companyName: company,
+        pricingMode: mode,
+        flatRateValue: flat
+      });
+
+      const html = BillingManager.buildStandaloneReportHtml(data);
+      document.open();
+      document.write(html);
+      document.close();
+    })();
+  </script>
+</body>
+</html>

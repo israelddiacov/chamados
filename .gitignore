@@ -1,0 +1,4 @@
+# Mantém o backend do Google Apps Script apenas no seu computador local (não vai para o GitHub público)
+google-backend/
+.DS_Store
+Thumbs.db
