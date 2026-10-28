@@ -156,8 +156,14 @@
                   <label for="clientPasswordInput" class="block text-base font-bold text-slate-800 mb-2">
                     Senha de Acesso da Empresa
                   </label>
-                  <input id="clientPasswordInput" type="password" required placeholder="Digite a senha de acesso..."
-                    class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition" />
+                  <div class="relative">
+                    <input id="clientPasswordInput" type="password" required placeholder="Digite a senha de acesso..."
+                      class="w-full px-4 py-3.5 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition" />
+                    <button type="button" onclick="const i=document.getElementById('clientPasswordInput'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
+                      class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
+                      👁️ Mostrar
+                    </button>
+                  </div>
                 </div>
 
                 <p id="clientLoginError" class="hidden text-sm text-rose-700 font-semibold bg-rose-50 border border-rose-200 rounded-xl p-3.5"></p>
@@ -514,8 +520,14 @@
               <label for="adminPasswordInput" class="block text-base font-bold text-slate-800 mb-2">
                 Senha do Administrador
               </label>
-              <input id="adminPasswordInput" type="password" required placeholder="Digite sua senha de administrador..."
-                class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-slate-900" />
+              <div class="relative">
+                <input id="adminPasswordInput" type="password" required placeholder="Digite sua senha de administrador..."
+                  class="w-full px-4 py-3.5 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-slate-900" />
+                <button type="button" onclick="const i=document.getElementById('adminPasswordInput'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
+                  class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
+                  👁️ Mostrar
+                </button>
+              </div>
             </div>
             <p id="adminLoginError" class="hidden text-sm text-rose-700 font-semibold bg-rose-50 border border-rose-200 rounded-xl p-3.5"></p>
             <button type="submit"
@@ -832,13 +844,25 @@
               <form id="formUpdatePasswords" class="space-y-4">
                 <div>
                   <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha da Área do Cliente</label>
-                  <input id="inputNewClientPass" type="password" required placeholder="Digite a nova senha dos clientes..."
-                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
+                  <div class="relative">
+                    <input id="inputNewClientPass" type="password" required placeholder="Digite a nova senha dos clientes..."
+                      class="w-full px-4 py-3 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
+                    <button type="button" onclick="const i=document.getElementById('inputNewClientPass'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
+                      class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
+                      👁️ Mostrar
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha do Administrador (Diferente da do Cliente)</label>
-                  <input id="inputNewAdminPass" type="password" required placeholder="Digite sua nova senha de administrador..."
-                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
+                  <div class="relative">
+                    <input id="inputNewAdminPass" type="password" required placeholder="Digite sua nova senha de administrador..."
+                      class="w-full px-4 py-3 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
+                    <button type="button" onclick="const i=document.getElementById('inputNewAdminPass'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
+                      class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
+                      👁️ Mostrar
+                    </button>
+                  </div>
                 </div>
                 <div class="flex flex-wrap gap-2 pt-1">
                   <button type="submit"

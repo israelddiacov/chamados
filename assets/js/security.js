@@ -10,11 +10,20 @@
 
 const SecurityManager = (() => {
   const STORAGE_KEYS = {
-    SECURITY_CSV: 'diacov_csv_acessos_seguranca_v2',
-    CLIENT_SESSION: 'diacov_session_client_v2',
-    ADMIN_SESSION: 'diacov_session_admin_v2',
+    SECURITY_CSV: 'diacov_csv_acessos_seguranca_v3',
+    CLIENT_SESSION: 'diacov_session_client_v3',
+    ADMIN_SESSION: 'diacov_session_admin_v3',
     ENCRYPTED_CLOUD_CFG: 'diacov_cloud_cfg_v1'
   };
+
+  // Remove chaves antigas para garantir o reset imediato no navegador
+  try {
+    localStorage.removeItem('diacov_csv_acessos_seguranca_v2');
+    localStorage.removeItem('diacov_sec_client_hash_v1');
+    localStorage.removeItem('diacov_sec_admin_hash_v1');
+    sessionStorage.removeItem('diacov_session_client_v2');
+    sessionStorage.removeItem('diacov_session_admin_v2');
+  } catch (e) {}
 
   // Conteúdo inicial de acessos_seguranca.csv (apenas hashes embaralhados com salt, ZERO senha exposta)
   const DEFAULT_SECURITY_CSV = [
