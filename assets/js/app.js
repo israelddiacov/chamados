@@ -495,7 +495,7 @@ const AppController = (() => {
    * 3. Envia direto para o seu WhatsApp
    * 4. Mostra SOMENTE a mensagem final confirmando o envio (sem mais botões ou opções)
    */
-  async function handleFinalConfirmAndSend() {
+  function handleFinalConfirmAndSend() {
     const empresa = document.getElementById('selectEmpresaCliente')?.value || 'RFranco Engenharia';
     const nomeCliente = document.getElementById('inputNomeCliente')?.value.trim();
     const whatsapp = document.getElementById('inputWhatsapp')?.value.trim();
@@ -525,26 +525,26 @@ const AppController = (() => {
       valorCalculado: summary.valorTotal
     });
 
-    // 1. Grava automaticamente em Segundo Plano na Google Agenda via Google Apps Script
-    GoogleIntegration.callGoogleBackend({
-      action: 'createTicketInvite',
-      authHash: SecurityManager.getExpectedClientHash(),
-      ticket: createdTicket
-    });
-
-    // 2. Dispara direto para o WhatsApp do Administrador (CallMeBot em 2º plano + abertura direta wa.me)
+    // 1. Dispara imediatamente para o seu WhatsApp de forma síncrona no clique (evita bloqueio de pop-up no celular)
     const gcalUrl = GoogleIntegration.generateGoogleCalendarInviteUrl(createdTicket, false);
-    const waResult = await WhatsAppManager.notifyOwnerOnWhatsApp(createdTicket, gcalUrl);
+    const waResult = WhatsAppManager.notifyOwnerOnWhatsApp(createdTicket, gcalUrl);
 
     if (waResult && waResult.waMeUrl) {
       window.open(waResult.waMeUrl, '_blank', 'noopener,noreferrer');
     }
 
+    // 2. Grava automaticamente em Segundo Plano na sua Google Agenda via Google Apps Script
+    GoogleIntegration.callGoogleBackend({
+      action: 'createTicketInvite',
+      authHash: SecurityManager.getBackendCompatibleClientHash(),
+      ticket: createdTicket
+    });
+
     // 3. Atualiza o calendário ao fundo e mostra SOMENTE a mensagem confirmando o envio
     renderClientAvailabilityCalendar();
     setText(
       'finalSentMessageText',
-      `O chamado ${createdTicket.id} (${createdTicket.empresa} — ${createdTicket.nomeCliente}) para ${createdTicket.sugestao1Formatada} foi registrado e enviado com sucesso!`
+      `O chamado ${createdTicket.id} (${createdTicket.empresa} — ${createdTicket.nomeCliente}) para ${createdTicket.sugestao1Formatada} foi registrado na agenda e enviado com sucesso!`
     );
     setWizardStep(4);
   }

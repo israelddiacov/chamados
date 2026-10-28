@@ -138,13 +138,16 @@ const GoogleIntegration = (() => {
     if (res && res.ok) {
       if (res.empresasCsv) CatalogManager.setCompaniesCsvRaw(res.empresasCsv);
       if (res.acessosSegurancaCsv) SecurityManager.setSecurityCsvRaw(res.acessosSegurancaCsv);
-      return { ok: true, source: 'google_drive' };
+      if (Array.isArray(res.ticketsList) && res.ticketsList.length > 0) {
+        SchedulerManager.saveAllTickets(res.ticketsList);
+      }
+      return { ok: true, source: 'google_drive', data: res };
     }
     return { ok: false, source: 'local_cache' };
   }
 
   async function saveSecurityCsvToGoogleDrive(securityCsv) {
-    const adminHash = SecurityManager.getExpectedAdminHash();
+    const adminHash = SecurityManager.getBackendCompatibleAdminHash();
     return await callGoogleBackend({
       action: 'saveSecurityCsv',
       adminHash,
@@ -153,7 +156,7 @@ const GoogleIntegration = (() => {
   }
 
   async function saveCsvsToGoogleDrive(companiesCsv, servicesCsv) {
-    const adminHash = SecurityManager.getExpectedAdminHash();
+    const adminHash = SecurityManager.getBackendCompatibleAdminHash();
     const r1 = await callGoogleBackend({
       action: 'saveCompaniesCsv',
       adminHash,
@@ -168,7 +171,7 @@ const GoogleIntegration = (() => {
   }
 
   async function syncMonthToGoogleDriveSpreadsheet(year, monthZeroBased, ticketsList) {
-    const adminHash = SecurityManager.getExpectedAdminHash();
+    const adminHash = SecurityManager.getBackendCompatibleAdminHash();
     return await callGoogleBackend({
       action: 'syncCalendarAndSheet',
       adminHash,
@@ -179,7 +182,7 @@ const GoogleIntegration = (() => {
   }
 
   async function saveBillingHtmlToGoogleDrive(fileName, htmlContent) {
-    const adminHash = SecurityManager.getExpectedAdminHash();
+    const adminHash = SecurityManager.getBackendCompatibleAdminHash();
     return await callGoogleBackend({
       action: 'saveBillingReportHtml',
       adminHash,

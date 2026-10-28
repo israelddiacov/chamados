@@ -50,11 +50,11 @@ const WhatsAppManager = (() => {
 
   /**
    * Dispara aviso silencioso gratuito via CallMeBot API (se configurado)
-   * e retorna URL wa.me direta
+   * e retorna URL wa.me direta de forma síncrona (evitando bloqueio de pop-up no celular)
    */
-  async function notifyOwnerOnWhatsApp(ticket, googleCalendarUrl) {
+  function notifyOwnerOnWhatsApp(ticket, googleCalendarUrl) {
     const cfg = SecurityManager.loadCloudConfig();
-    const ownerPhone = normalizePhoneToE164(cfg.ownerWhatsapp || '5511999999999');
+    const ownerPhone = normalizePhoneToE164(cfg.ownerWhatsapp);
     const messageText = buildOwnerInviteMessage(ticket, googleCalendarUrl);
 
     // Se o administrador configurou a chave gratuita do CallMeBot, envia silenciosamente em segundo plano

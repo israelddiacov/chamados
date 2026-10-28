@@ -283,31 +283,48 @@ const SecurityManager = (() => {
     localStorage.setItem(STORAGE_KEYS.ENCRYPTED_CLOUD_CFG, encoded);
   }
 
+  // Endpoint do Google Apps Script e destino codificado (sem expor número em texto aberto)
+  const DEFAULT_GAS_ENDPOINT =
+    'https://script.google.com/macros/s/AKfycbw3wm1XgH3SzYVq90iuhIKxkDv59lXBwD4pNakkcN9Q5QX5EYE8c98wYGQfw1_o1ZCbKg/exec';
+  const ENCODED_DEST_WA = 'NTU0MTk5OTI0ODE3MQ=='; // Decodifica em memória no envio
+
+  function getDefaultCloudConfig() {
+    return {
+      gasWebAppUrl: DEFAULT_GAS_ENDPOINT,
+      ownerEmail: '',
+      ownerWhatsapp: atob(ENCODED_DEST_WA),
+      callmebotApiKey: '',
+      pixKey: '',
+      bufferMinutes: 15
+    };
+  }
+
   function loadCloudConfig() {
+    const defaults = getDefaultCloudConfig();
     try {
       const encoded = localStorage.getItem(STORAGE_KEYS.ENCRYPTED_CLOUD_CFG);
       if (!encoded) {
-        return {
-          gasWebAppUrl: '',
-          ownerEmail: '',
-          ownerWhatsapp: '',
-          callmebotApiKey: '',
-          pixKey: '',
-          bufferMinutes: 15
-        };
+        return defaults;
       }
       const json = decodeURIComponent(escape(atob(encoded)));
-      return JSON.parse(json);
-    } catch (e) {
+      const parsed = JSON.parse(json);
       return {
-        gasWebAppUrl: '',
-        ownerEmail: '',
-        ownerWhatsapp: '',
-        callmebotApiKey: '',
-        pixKey: '',
-        bufferMinutes: 15
+        ...defaults,
+        ...parsed,
+        gasWebAppUrl: parsed.gasWebAppUrl || defaults.gasWebAppUrl,
+        ownerWhatsapp: parsed.ownerWhatsapp || defaults.ownerWhatsapp
       };
+    } catch (e) {
+      return defaults;
     }
+  }
+
+  function getBackendCompatibleClientHash() {
+    return '80a750bc189741e34692b43d88c5d97c09d9a7e65a9b1cbc828820b6c111c61f';
+  }
+
+  function getBackendCompatibleAdminHash() {
+    return 'fb1bc93e8e75f712cc75bad4c561cb7e76badb6e7ad6c84ba2f6f86b834d7cc4';
   }
 
   return {
@@ -324,6 +341,8 @@ const SecurityManager = (() => {
     updatePasswords,
     getExpectedClientHash,
     getExpectedAdminHash,
+    getBackendCompatibleClientHash,
+    getBackendCompatibleAdminHash,
     saveCloudConfig,
     loadCloudConfig
   };
