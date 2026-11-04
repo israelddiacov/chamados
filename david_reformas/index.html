@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>David Reformas — Pintura, Alvenaria, Pisos & Acabamentos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen overflow-x-hidden selection:bg-amber-600 selection:text-white">
+
+  <!-- Container de Notificações -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-md"></div>
+
+  <!-- Cabeçalho Principal -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-xl bg-amber-600 text-white flex items-center justify-center shadow-sm text-2xl font-bold">
+          🧱
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            David Reformas — Pintura, Alvenaria & Acabamentos
+          </h1>
+          <p class="text-sm sm:text-base text-slate-600">
+            Qualidade, organização na obra e orçamento com hora marcada
+          </p>
+        </div>
+      </div>
+
+      <!-- Alternador de Visão -->
+      <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+        <button id="navBtnCliente" type="button"
+          class="px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-amber-600 text-white shadow-sm">
+          <span>🏠</span>
+          <span>Serviços & Agendar Orçamento</span>
+        </button>
+        <button id="navBtnAdmin" type="button"
+          class="px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-700 hover:text-slate-900">
+          <span>🔒</span>
+          <span>Área do Profissional</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+
+    <!-- ======================================================================
+         VISÃO 1: VITRINE COMERCIAL ABERTA + CALENDÁRIO DE ORÇAMENTOS
+         ====================================================================== -->
+    <section id="sectionClienteWrapper" class="space-y-8 animate-spring-up">
+
+      <!-- Banner Principal -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-900 rounded-2xl p-8 sm:p-10 text-white shadow-md">
+        <div class="max-w-3xl space-y-4">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-sm font-bold tracking-wide">
+            PINTURA RESIDENCIAL • ALVENARIA • PORCELANATO • REFORMAS
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight">
+            Transforme e Valorize seu Imóvel com Acabamento Profissional e Obra Limpa
+          </h2>
+          <p class="text-base sm:text-lg text-slate-200 leading-relaxed">
+            Atendimento para casas, apartamentos, condomínios e comércios. Escolha um dia livre no calendário abaixo para agendar sua visita de avaliação e orçamento sem compromisso.
+          </p>
+        </div>
+      </div>
+
+      <!-- 4 Banners dos Trabalhos Realizados -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-extrabold text-slate-900">
+          Especialidades e Serviços Realizados:
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Card 1: Pintura -->
+          <div class="corp-banner-card p-6 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-2xl shrink-0">
+              🎨
+            </div>
+            <div class="space-y-1.5">
+              <h4 class="text-lg font-bold text-slate-900">
+                Pintura Residencial, Comercial e Fachadas
+              </h4>
+              <p class="text-base text-slate-600 leading-relaxed">
+                Pintura interna e externa de alto padrão, aplicação de <strong>massa corrida e acrílica</strong>, texturas, grafiato, tratamento de trincas, mofo e umidade, além de pintura de portas, janelas, grades e portões.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 2: Alvenaria -->
+          <div class="corp-banner-card p-6 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center text-2xl shrink-0">
+              🧱
+            </div>
+            <div class="space-y-1.5">
+              <h4 class="text-lg font-bold text-slate-900">
+                Alvenaria, Reboco, Muros e Reformas
+              </h4>
+              <p class="text-base text-slate-600 leading-relaxed">
+                Construção e demolição de paredes, levantamento de muros, reboco fino, contrapiso, calçadas, ampliação de cômodos, churrasqueiras e reformas completas de ambientes.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 3: Pisos e Revestimentos -->
+          <div class="corp-banner-card p-6 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center text-2xl shrink-0">
+              📐
+            </div>
+            <div class="space-y-1.5">
+              <h4 class="text-lg font-bold text-slate-900">
+                Pisos, Porcelanatos e Azulejos
+              </h4>
+              <p class="text-base text-slate-600 leading-relaxed">
+                Assentamento técnico de <strong>porcelanatos</strong>, pisos cerâmicos, revestimentos de cozinha e banheiro com nivelamento preciso, cortes de acabamento e rejuntamento.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 4: Telhados e Reparos -->
+          <div class="corp-banner-card p-6 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-purple-50 border border-purple-200 text-purple-600 flex items-center justify-center text-2xl shrink-0">
+              🏠
+            </div>
+            <div class="space-y-1.5">
+              <h4 class="text-lg font-bold text-slate-900">
+                Telhados, Impermeabilização e Reparos
+              </h4>
+              <p class="text-base text-slate-600 leading-relaxed">
+                Manutenção de telhados, troca de telhas, limpeza e ajuste de calhas, impermeabilização de lajes e paredes externas e instalação de bancadas, pias e louças sanitárias.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendário de Disponibilidade para Agendar Visita / Orçamento -->
+      <div class="corp-card p-6 sm:p-8 space-y-5 border-2 border-amber-200">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
+          <div>
+            <span class="text-sm font-bold text-amber-700 uppercase tracking-wide">Agendamento Online Fácil</span>
+            <h3 id="clientCalendarMonthTitle" class="text-2xl font-extrabold text-slate-900 mt-0.5">Mês / Ano</h3>
+            <p class="text-base text-slate-600 mt-0.5">
+              Clique no dia desejado abaixo para agendar uma visita de orçamento no seu imóvel:
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button id="btnClientCalPrev" type="button"
+              class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition">
+              ◀ Mês Anterior
+            </button>
+            <button id="btnClientCalNext" type="button"
+              class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition">
+              Próximo Mês ▶
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-2 text-center text-sm font-bold text-slate-600 uppercase">
+          <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+        </div>
+
+        <div id="clientCalendarGridCells" class="grid grid-cols-7 gap-2.5"></div>
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         MODAL DO CLIENTE EM 3 PÁGINAS (WIZARD)
+         ====================================================================== -->
+    <div id="modalClientWizard" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+      <div class="corp-card max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl animate-spring-up my-8">
+
+        <div id="wizardHeaderBar" class="space-y-4 border-b border-slate-200 pb-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <span id="wizardStepBadge" class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-sm font-bold">
+                Página 1 de 3
+              </span>
+              <h3 id="wizardStepTitle" class="text-2xl font-extrabold text-slate-900 mt-2">
+                1. Dia e Horário para Visita / Orçamento
+              </h3>
+            </div>
+            <button id="btnCloseClientWizard" type="button"
+              class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 text-lg font-bold flex items-center justify-center">
+              ✕
+            </button>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2">
+            <div id="wizProg1" class="h-2 rounded-full bg-amber-600 transition-all"></div>
+            <div id="wizProg2" class="h-2 rounded-full bg-slate-200 transition-all"></div>
+            <div id="wizProg3" class="h-2 rounded-full bg-slate-200 transition-all"></div>
+          </div>
+        </div>
+
+        <form id="formCreateTicket" class="space-y-6" novalidate>
+
+          <!-- PÁGINA 1: DIA E HORÁRIO -->
+          <div id="wizardPage1" class="space-y-5">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span class="block text-sm font-bold text-slate-800">
+                📌 Disponibilidade neste dia (<span id="wizardSelectedDateLabel" class="text-amber-700"></span>):
+              </span>
+              <div id="wizardDayBusySlotsList" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="space-y-4">
+              <div>
+                <label for="inputSugestao1" class="block text-base font-bold text-slate-800 mb-2">
+                  1ª Opção de Dia e Horário para a Visita <span class="text-rose-600">*</span>
+                </label>
+                <input id="inputSugestao1" type="datetime-local" required
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-semibold focus:bg-white focus:outline-none focus:border-amber-600" />
+              </div>
+
+              <div>
+                <label for="inputSugestao2" class="block text-base font-bold text-slate-800 mb-2">
+                  2ª Opção de Horário (Opcional)
+                </label>
+                <input id="inputSugestao2" type="datetime-local"
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base focus:bg-white focus:outline-none focus:border-amber-600" />
+              </div>
+            </div>
+
+            <div class="flex justify-end pt-2">
+              <button id="btnWizardNext1" type="button"
+                class="px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-base shadow-sm transition">
+                Avançar para Serviços ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- PÁGINA 2: SERVIÇOS DE PINTURA / REFORMA + AVISO DE MATERIAIS -->
+          <div id="wizardPage2" class="hidden space-y-5">
+            <div class="space-y-3 min-w-0">
+              <label for="selectServiceCatalog" class="block text-base font-bold text-slate-800">
+                Escolha o tipo de serviço que você precisa:
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 min-w-0">
+                <div class="sm:col-span-8 min-w-0">
+                  <select id="selectServiceCatalog"
+                    class="w-full max-w-full min-w-0 truncate px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium focus:bg-white focus:outline-none focus:border-amber-600">
+                  </select>
+                </div>
+                <div class="sm:col-span-4 min-w-0">
+                  <button id="btnAddService" type="button"
+                    class="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-base transition shadow-sm">
+                    + Adicionar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <span class="block text-sm font-semibold text-slate-700">
+                Ou clique direto nos itens abaixo para marcar:
+              </span>
+              <div id="quickServicesContainer" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+              <span class="block text-sm font-bold text-slate-700 mb-2">
+                Serviços selecionados para o orçamento:
+              </span>
+              <div id="selectedServicesChips" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div>
+              <label for="inputDescricaoChamado" class="block text-base font-bold text-slate-800 mb-2">
+                Descrição do Serviço (espaço abaixo livre para informar cômodos, metragem, etc.):
+              </label>
+              <textarea id="inputDescricaoChamado" rows="5"
+                placeholder="Os serviços escolhidos são montados aqui automaticamente. Escreva abaixo qualquer detalhe extra sobre o imóvel..."
+                class="w-full max-w-full p-4 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base leading-relaxed focus:bg-white focus:outline-none focus:border-amber-600"></textarea>
+            </div>
+
+            <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 text-sm sm:text-base leading-relaxed">
+              <strong>⚖️ Informação sobre Materiais e Tintas:</strong> O orçamento refere-se à mão de obra especializada de pintura, alvenaria e acabamento. As tintas, massas, argamassas, pisos e materiais de construção são fornecidos pelo proprietário conforme lista levantada na avaliação técnica.
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+              <button id="btnWizardBack2" type="button"
+                class="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-base transition">
+                ⬅ Voltar
+              </button>
+              <button id="btnWizardNext2" type="button"
+                class="px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-base shadow-sm transition">
+                Avançar para Seus Dados ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- PÁGINA 3: IDENTIFICAÇÃO, ENDEREÇO E CONCLUIR -->
+          <div id="wizardPage3" class="hidden space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="selectTipoImovel" class="block text-base font-bold text-slate-800 mb-2">
+                  Tipo de Imóvel
+                </label>
+                <select id="selectTipoImovel"
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium focus:bg-white focus:outline-none focus:border-amber-600">
+                  <option value="Casa Residencial">Casa Residencial</option>
+                  <option value="Apartamento / Condomínio">Apartamento / Condomínio</option>
+                  <option value="Comércio / Loja / Escritório">Comércio / Loja / Escritório</option>
+                  <option value="Sobrado / Terreno">Sobrado / Terreno</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="inputWhatsapp" class="block text-base font-bold text-slate-800 mb-2">
+                  Seu WhatsApp (Obrigatório) <span class="text-rose-600">*</span>
+                </label>
+                <input id="inputWhatsapp" type="tel" required placeholder="(41) 99999-9999"
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-semibold placeholder-slate-400 focus:bg-white focus:outline-none focus:border-amber-600" />
+              </div>
+
+              <div>
+                <label for="inputNomeCliente" class="block text-base font-bold text-slate-800 mb-2">
+                  Seu Nome <span class="text-rose-600">*</span>
+                </label>
+                <input id="inputNomeCliente" type="text" required placeholder="Ex: João da Silva"
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-amber-600" />
+              </div>
+
+              <div>
+                <label for="inputEnderecoObra" class="block text-base font-bold text-slate-800 mb-2">
+                  Bairro / Endereço do Imóvel <span class="text-rose-600">*</span>
+                </label>
+                <input id="inputEnderecoObra" type="text" required placeholder="Ex: Bairro Água Verde, Rua..."
+                  class="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-amber-600" />
+              </div>
+            </div>
+
+            <!-- Confirmação Final ("Tem certeza?") -->
+            <div id="wizardConfirmPromptBox" class="hidden p-5 rounded-xl bg-amber-50 border-2 border-amber-300 space-y-4">
+              <div class="space-y-1">
+                <h4 class="text-lg font-extrabold text-amber-950">
+                  Tem certeza que deseja confirmar e enviar este pedido de orçamento?
+                </h4>
+                <p id="wizardConfirmSummaryText" class="text-base text-amber-900 leading-relaxed"></p>
+              </div>
+              <div class="flex flex-wrap items-center justify-end gap-3">
+                <button id="btnCancelConfirmTicket" type="button"
+                  class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-bold text-sm">
+                  Revisar Dados
+                </button>
+                <button id="btnFinalConfirmSend" type="button"
+                  class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-base shadow-md transition">
+                  ✓ Sim, Confirmar e Enviar Agora
+                </button>
+              </div>
+            </div>
+
+            <div id="wizardStep3FooterBtns" class="flex items-center justify-between pt-2">
+              <button id="btnWizardBack3" type="button"
+                class="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-base transition">
+                ⬅ Voltar
+              </button>
+              <button id="btnWizardPreConclude" type="button"
+                class="px-7 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-base shadow-md transition">
+                ✓ Concluir Agendamento
+              </button>
+            </div>
+          </div>
+
+          <!-- TELA FINAL DE SUCESSO -->
+          <div id="wizardPageSuccessFinal" class="hidden py-8 text-center space-y-4">
+            <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl font-bold">
+              ✓
+            </div>
+            <h3 class="text-2xl font-extrabold text-slate-900">
+              Solicitação de Orçamento Enviada!
+            </h3>
+            <p id="finalSentMessageText" class="text-base sm:text-lg text-slate-600 max-w-lg mx-auto leading-relaxed"></p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         VISÃO 2: PAINEL DO PROFISSIONAL (DAVID REFORMAS)
+         ====================================================================== -->
+    <section id="sectionAdminWrapper" class="hidden space-y-6">
+
+      <!-- Login do Profissional -->
+      <div id="adminLockScreen" class="max-w-lg mx-auto mt-6 animate-spring-up">
+        <div class="corp-card p-8 space-y-6">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-amber-600 text-white flex items-center justify-center text-2xl">
+              🔒
+            </div>
+            <div>
+              <span class="text-sm font-bold uppercase text-amber-700">Área Exclusiva do Profissional</span>
+              <h2 class="text-2xl font-extrabold text-slate-900">Painel David Reformas</h2>
+            </div>
+          </div>
+
+          <p class="text-base text-slate-600">
+            Acesse sua agenda de visitas, controle de obras e o gerador de <strong>Orçamentos e Recibos em PDF</strong>.
+          </p>
+
+          <form id="formAdminLogin" class="space-y-4">
+            <div>
+              <label for="adminPasswordInput" class="block text-base font-bold text-slate-800 mb-2">
+                Senha do Profissional
+              </label>
+              <div class="relative">
+                <input id="adminPasswordInput" type="password" required placeholder="Digite sua senha..."
+                  class="w-full px-4 py-3.5 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-amber-600" />
+                <button type="button" onclick="const i=document.getElementById('adminPasswordInput'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
+                  class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
+                  👁️ Mostrar
+                </button>
+              </div>
+            </div>
+            <p id="adminLoginError" class="hidden text-sm text-rose-700 font-semibold bg-rose-50 border border-rose-200 rounded-xl p-3.5"></p>
+            <button type="submit"
+              class="w-full py-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-base shadow-sm transition">
+              Entrar no Painel ➔
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Conteúdo Desbloqueado do David -->
+      <div id="adminUnlockedContent" class="hidden space-y-6">
+
+        <div class="corp-card p-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" data-admin-tab="calendario"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-amber-600 text-white shadow-sm">
+              <span>📅</span>
+              <span>Agenda de Visitas & Obras</span>
+            </button>
+            <button type="button" data-admin-tab="orcamento"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-slate-100 text-slate-700 hover:bg-slate-200">
+              <span>📄</span>
+              <span>Emitir Orçamento / Recibo em PDF</span>
+            </button>
+            <button type="button" data-admin-tab="catalogo"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-slate-100 text-slate-700 hover:bg-slate-200">
+              <span>🧱</span>
+              <span>Tabela de Serviços</span>
+            </button>
+            <button type="button" data-admin-tab="seguranca"
+              class="px-4 py-2.5 rounded-xl text-sm font-bold transition flex items-center gap-2 bg-slate-100 text-slate-700 hover:bg-slate-200">
+              <span>⚙️</span>
+              <span>Senha & Dados do Profissional</span>
+            </button>
+          </div>
+
+          <button id="btnLogoutAdmin" type="button"
+            class="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-sm font-bold transition">
+            🔒 Sair
+          </button>
+        </div>
+
+        <!-- ABA 1: CALENDÁRIO E PEDIDOS DE VISITA -->
+        <div id="adminTab_calendario" class="space-y-6 animate-spring-up">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="corp-card p-5 flex items-center justify-between">
+              <div>
+                <span class="text-sm font-semibold text-slate-500">Visitas Pendentes</span>
+                <p id="statPendingCount" class="text-3xl font-extrabold text-amber-600 mt-1">0</p>
+              </div>
+              <span class="text-3xl">⏳</span>
+            </div>
+            <div class="corp-card p-5 flex items-center justify-between">
+              <div>
+                <span class="text-sm font-semibold text-slate-500">Visitas / Obras Confirmadas</span>
+                <p id="statConfirmedCount" class="text-3xl font-extrabold text-emerald-600 mt-1">0</p>
+              </div>
+              <span class="text-3xl">✅</span>
+            </div>
+            <div class="corp-card p-5 flex items-center justify-between">
+              <div>
+                <span class="text-sm font-semibold text-slate-500">Total Orçado Confirmado</span>
+                <p id="statRevenueMonth" class="text-3xl font-extrabold text-slate-900 mt-1">R$ 0,00</p>
+              </div>
+              <span class="text-3xl">💰</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-7 corp-card p-6 space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 id="calendarMonthTitle" class="text-xl font-extrabold text-slate-900">Mês / Ano</h3>
+                <div class="flex gap-2">
+                  <button id="btnCalPrev" type="button" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm font-bold">◀ Ant.</button>
+                  <button id="btnCalNext" type="button" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-sm font-bold">Próx. ▶</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-500 uppercase">
+                <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+              </div>
+              <div id="calendarGridCells" class="grid grid-cols-7 gap-2"></div>
+            </div>
+
+            <div class="lg:col-span-5 space-y-4">
+              <h3 class="text-lg font-extrabold text-slate-900">Solicitações de Visita & Obras</h3>
+              <div id="adminTicketsListContainer" class="space-y-4 max-h-[680px] overflow-y-auto pr-1"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 2: GERADOR DE ORÇAMENTO E RECIBO EM PDF -->
+        <div id="adminTab_orcamento" class="hidden space-y-6 animate-spring-up">
+          <div class="corp-card p-6 sm:p-8 space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
+              <div>
+                <span class="text-xs font-bold uppercase text-amber-700">Documento Profissional com 1 Clique</span>
+                <h3 class="text-2xl font-extrabold text-slate-900">Gerador de Orçamento & Recibo em PDF</h3>
+                <p class="text-base text-slate-600">
+                  Selecione um cliente agendado abaixo (ou preencha na hora) para gerar o PDF de Orçamento ou Recibo pronto para enviar no WhatsApp.
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-base font-bold text-slate-800 mb-2">Carregar Dados de Cliente Agendado:</label>
+              <select id="quoteSelectVisit" class="w-full px-4 py-3 rounded-xl bg-amber-50 border border-amber-300 text-slate-900 text-base font-semibold"></select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Nome do Cliente</label>
+                <input id="quoteClientName" type="text" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-base" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">WhatsApp do Cliente</label>
+                <input id="quoteClientPhone" type="text" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-base" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Local / Endereço da Obra</label>
+                <input id="quoteClientAddress" type="text" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-base" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-slate-700 mb-1.5">Descrição dos Serviços de Pintura / Reforma (Mão de Obra)</label>
+              <textarea id="quoteDescription" rows="5" class="w-full p-4 rounded-xl bg-slate-50 border border-slate-300 text-base leading-relaxed"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-bold text-emerald-800 mb-1.5">Valor Total da Mão de Obra (R$)</label>
+                <input id="quoteTotalValue" type="number" step="50" value="1200.00" class="w-full px-4 py-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-lg font-extrabold" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Prazo Estimado de Execução</label>
+                <input id="quoteTimeline" type="text" value="5 dias úteis" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-base" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1.5">Condições de Pagamento</label>
+                <input id="quotePaymentTerms" type="text" value="50% no início e 50% na entrega (PIX)" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-base" />
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3 pt-2">
+              <button id="btnGenerateQuotePdf" type="button"
+                class="px-6 py-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-base shadow-md transition">
+                🖨️ Gerar ORÇAMENTO em PDF / Imprimir
+              </button>
+              <button id="btnGenerateReceiptPdf" type="button"
+                class="px-6 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-base shadow-md transition">
+                🧾 Gerar RECIBO DE PAGAMENTO em PDF
+              </button>
+              <button id="btnSendQuoteWhatsApp" type="button"
+                class="px-6 py-4 rounded-xl bg-green-600 hover:bg-green-700 text-white font-extrabold text-base shadow-md transition">
+                💬 Enviar Resumo do Orçamento no WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 3: TABELA DE SERVIÇOS -->
+        <div id="adminTab_catalogo" class="hidden space-y-6 animate-spring-up">
+          <div class="corp-card p-6 sm:p-7 space-y-4">
+            <h3 class="text-xl font-extrabold text-slate-900">Tabela de Serviços e Valores Base de Referência</h3>
+            <p class="text-base text-slate-600">Estes valores servem apenas de referência inicial para os seus orçamentos e nunca aparecem para o cliente na tela pública.</p>
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+              <table class="w-full text-left">
+                <thead class="bg-slate-100 text-xs uppercase text-slate-600 font-bold">
+                  <tr>
+                    <th class="py-3 px-4">Código</th>
+                    <th class="py-3 px-4">Serviço</th>
+                    <th class="py-3 px-4">Categoria</th>
+                    <th class="py-3 px-4 text-right">Valor Base (R$)</th>
+                  </tr>
+                </thead>
+                <tbody id="adminServicesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABA 4: SENHA & DADOS DO PROFISSIONAL -->
+        <div id="adminTab_seguranca" class="hidden space-y-6 animate-spring-up">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="corp-card p-6 space-y-4">
+              <h3 class="text-lg font-extrabold text-slate-900">🔑 Alterar Senha do Painel</h3>
+              <form id="formUpdatePasswords" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha do Profissional</label>
+                  <div class="relative">
+                    <input id="inputNewAdminPass" type="password" required placeholder="Digite a nova senha..."
+                      class="w-full px-4 py-3 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-base" />
+                    <button type="button" onclick="const i=document.getElementById('inputNewAdminPass'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
+                      class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200 text-slate-700 text-xs font-bold">
+                      👁️ Mostrar
+                    </button>
+                  </div>
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm">
+                  Salvar Nova Senha
+                </button>
+              </form>
+            </div>
+
+            <div class="corp-card p-6 space-y-4">
+              <h3 class="text-lg font-extrabold text-slate-900">📱 Dados do Profissional (WhatsApp & PIX)</h3>
+              <form id="formSaveCloudConfig" class="space-y-3.5">
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1">Nome Comercial no Cabeçalho do Orçamento</label>
+                  <input id="cfgProfNome" type="text" value="David Reformas — Pintura & Construção" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1">WhatsApp do David (Com DDD)</label>
+                  <input id="cfgOwnerWhatsapp" type="text" placeholder="Ex: 41999999999" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1">Chave PIX para sair nos Orçamentos e Recibos</label>
+                  <input id="cfgPixKey" type="text" placeholder="CPF, Telefone ou E-mail PIX..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-bold text-slate-800 mb-1">E-mail Google Agenda (Opcional)</label>
+                  <input id="cfgOwnerEmail" type="email" placeholder="E-mail da agenda..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm" />
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm">
+                  Salvar Dados do Profissional
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="assets/js/app_david.js"></script>
+</body>
+</html>
