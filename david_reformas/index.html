@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>David Reformas — Pintura, Alvenaria, Pisos & Acabamentos</title>
+  <!-- Suporte e Otimização para iPhone (iOS Web App / Apple Calendar) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="David Reformas" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="https://fav.farm/🧱" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="assets/css/animations.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -376,7 +382,7 @@
           </div>
 
           <!-- TELA FINAL DE SUCESSO -->
-          <div id="wizardPageSuccessFinal" class="hidden py-8 text-center space-y-4">
+          <div id="wizardPageSuccessFinal" class="hidden py-8 text-center space-y-5">
             <div class="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl font-bold">
               ✓
             </div>
@@ -384,6 +390,15 @@
               Solicitação de Orçamento Enviada!
             </h3>
             <p id="finalSentMessageText" class="text-base sm:text-lg text-slate-600 max-w-lg mx-auto leading-relaxed"></p>
+
+            <!-- Ações rápidas de Calendário (iPhone / Apple Calendar & Google) -->
+            <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <button id="btnClientAddToIphoneCal" type="button"
+                class="px-5 py-3 rounded-xl bg-slate-900 hover:bg-black text-white text-sm font-bold shadow-md transition flex items-center gap-2">
+                <span>🍎</span>
+                <span>Salvar no Calendário do iPhone / iCloud (.ics)</span>
+              </button>
+            </div>
           </div>
 
         </form>
@@ -646,13 +661,44 @@
                   <input id="cfgPixKey" type="text" placeholder="CPF, Telefone ou E-mail PIX..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm" />
                 </div>
                 <div>
-                  <label class="block text-sm font-bold text-slate-800 mb-1">E-mail Google Agenda (Opcional)</label>
-                  <input id="cfgOwnerEmail" type="email" placeholder="E-mail da agenda..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm" />
+                  <label class="block text-sm font-bold text-slate-800 mb-1">E-mail Apple iCloud do David (@icloud.com)</label>
+                  <input id="cfgOwnerEmail" type="email" placeholder="david@icloud.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm" />
                 </div>
                 <button type="submit" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm">
                   Salvar Dados do Profissional
                 </button>
               </form>
+            </div>
+          </div>
+
+          <!-- Card de Dicas de Produtividade para iPhone (iOS) -->
+          <div class="corp-card p-6 bg-gradient-to-r from-slate-900 to-slate-800 text-white space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">🍎</span>
+              <div>
+                <h4 class="text-lg font-extrabold text-white">Como Usar no iPhone (Safari & Apple iCloud)</h4>
+                <p class="text-xs text-slate-300">Dicas exclusivas para transformar este site em um aplicativo no seu iPhone</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-sm text-slate-200">
+              <div class="bg-white/10 rounded-xl p-4 space-y-1.5 border border-white/10">
+                <p class="font-bold text-amber-300">📲 1. Instalar na Tela Inicial</p>
+                <p class="text-xs leading-relaxed text-slate-300">
+                  No Safari do iPhone, toque no botão <strong>Compartilhar (ícone do quadrado com a setinha para cima ⬆️)</strong> e selecione <strong>"Adicionar à Tela de Início"</strong>. Ele vira um App nativo no seu iPhone!
+                </p>
+              </div>
+              <div class="bg-white/10 rounded-xl p-4 space-y-1.5 border border-white/10">
+                <p class="font-bold text-amber-300">📅 2. Sincronizar Calendário do iPhone</p>
+                <p class="text-xs leading-relaxed text-slate-300">
+                  Em cada visita ou orçamento, toque em <strong>"📲 Agenda do iPhone (.ics)"</strong>. O iOS abre direto a tela da sua Agenda com alarme ativado e endereço pronto para abrir no Apple Mapas ou Waze.
+                </p>
+              </div>
+              <div class="bg-white/10 rounded-xl p-4 space-y-1.5 border border-white/10">
+                <p class="font-bold text-amber-300">📄 3. Enviar PDF no WhatsApp</p>
+                <p class="text-xs leading-relaxed text-slate-300">
+                  Ao gerar um Orçamento ou Recibo em PDF no iPhone, toque em <strong>Compartilhar (⬆️) -> WhatsApp</strong> e escolha o cliente. O PDF vai direto, sem precisar baixar antes!
+                </p>
+              </div>
             </div>
           </div>
         </div>

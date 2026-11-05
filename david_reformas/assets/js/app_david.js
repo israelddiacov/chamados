@@ -50,6 +50,7 @@ const DavidReformasApp = (() => {
   let adminCalDate = new Date();
   let selectedAdminDayIso = null;
   let currentWizardStep = 1;
+  let lastCreatedVisit = null;
 
   /* ==========================================================================
      SHA-256 & SEGURANÇA
@@ -181,16 +182,20 @@ const DavidReformasApp = (() => {
           profissionalNome: 'David Reformas — Pintura & Construção',
           whatsappProfissional: '',
           emailGoogle: '',
+          emailIcloud: 'david@icloud.com',
           chavePix: '',
           gasWebAppUrl: ''
         };
       }
-      return JSON.parse(decodeURIComponent(escape(atob(raw))));
+      const data = JSON.parse(decodeURIComponent(escape(atob(raw))));
+      if (!data.emailIcloud && data.emailGoogle) data.emailIcloud = data.emailGoogle;
+      return data;
     } catch (e) {
       return {
         profissionalNome: 'David Reformas — Pintura & Construção',
         whatsappProfissional: '',
         emailGoogle: '',
+        emailIcloud: 'david@icloud.com',
         chavePix: '',
         gasWebAppUrl: ''
       };
@@ -200,6 +205,94 @@ const DavidReformasApp = (() => {
   function saveCloudConfig(cfg) {
     const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(cfg || {}))));
     localStorage.setItem(STORAGE_KEYS.CLOUD_CFG, encoded);
+  }
+
+  /* ==========================================================================
+     SINCRONIZAÇÃO E EVENTOS APPLE ICALENDAR (.ICS NATIVO DO IPHONE / ICLOUD)
+     ========================================================================== */
+  function generateIcsContent(visit) {
+    const dtStart = new Date(visit.sugestao1ISO);
+    const durMin = Number(visit.duracaoMinutos) || 60;
+    const dtEnd = new Date(dtStart.getTime() + durMin * 60000);
+
+    function pad2(n) { return String(n).padStart(2, '0'); }
+    function toIcsUtc(d) {
+      return (
+        d.getUTCFullYear() +
+        pad2(d.getUTCMonth() + 1) +
+        pad2(d.getUTCDate()) +
+        'T' +
+        pad2(d.getUTCHours()) +
+        pad2(d.getUTCMinutes()) +
+        pad2(d.getUTCSeconds()) +
+        'Z'
+      );
+    }
+
+    const startStr = toIcsUtc(dtStart);
+    const endStr = toIcsUtc(dtEnd);
+    const nowStr = toIcsUtc(new Date());
+
+    const cleanDesc = (visit.descricao || '')
+      .replace(/\\/g, '\\\\')
+      .replace(/\r?\n/g, '\\n')
+      .replace(/;/g, '\\;')
+      .replace(/,/g, '\\,');
+
+    const cleanLoc = `${visit.tipoImovel || 'Imóvel'} - ${visit.enderecoObra || ''}`
+      .replace(/\\/g, '\\\\')
+      .replace(/;/g, '\\;')
+      .replace(/,/g, '\\,');
+
+    const clientName = (visit.nomeCliente || 'Cliente').replace(/[,;]/g, ' ');
+
+    return [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//David Reformas//Apple iOS iCalendar//PT-BR',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:david-reformas-${visit.id}@icloud.com`,
+      `DTSTAMP:${nowStr}`,
+      `DTSTART:${startStr}`,
+      `DTEND:${endStr}`,
+      `SUMMARY:🧱 Visita Técnica / Orçamento: ${clientName}`,
+      `DESCRIPTION:${cleanDesc}\\n\\nCliente: ${clientName}\\nWhatsApp: ${visit.whatsapp || ''}`,
+      `LOCATION:${cleanLoc}`,
+      'STATUS:CONFIRMED',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT1H',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:Lembrete: Visita Técnica em 1 hora com ${clientName}`,
+      'END:VALARM',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT15M',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:Lembrete: Visita Técnica em 15 minutos com ${clientName}`,
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+  }
+
+  function downloadOrOpenIcs(visit) {
+    if (!visit || !visit.sugestao1ISO) return;
+    const icsData = generateIcsContent(visit);
+    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+    const filename = `visita_${visit.id}_${(visit.nomeCliente || 'cliente').toLowerCase().replace(/[^a-z0-9]/g, '_')}.ics`;
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 1500);
+    showToast('Abrindo evento no Calendário do iPhone / Apple Calendar!', 'slate');
   }
 
   /* ==========================================================================
@@ -488,6 +581,14 @@ const DavidReformasApp = (() => {
       document.getElementById('wizardStep3FooterBtns')?.classList.remove('hidden');
     });
     document.getElementById('btnFinalConfirmSend')?.addEventListener('click', handleFinalConfirmAndSend);
+    document.getElementById('btnClientAddToIphoneCal')?.addEventListener('click', () => {
+      if (lastCreatedVisit) {
+        downloadOrOpenIcs(lastCreatedVisit);
+      } else {
+        const visits = getAllVisits();
+        if (visits[0]) downloadOrOpenIcs(visits[0]);
+      }
+    });
 
     document.getElementById('btnAddService')?.addEventListener('click', () => {
       const sel = document.getElementById('selectServiceCatalog');
@@ -563,10 +664,12 @@ const DavidReformasApp = (() => {
 
     document.getElementById('formSaveCloudConfig')?.addEventListener('submit', e => {
       e.preventDefault();
+      const mail = document.getElementById('cfgOwnerEmail')?.value.trim() || '';
       saveCloudConfig({
         profissionalNome: document.getElementById('cfgProfNome')?.value.trim() || 'David Reformas — Pintura & Construção',
         whatsappProfissional: document.getElementById('cfgOwnerWhatsapp')?.value.trim() || '',
-        emailGoogle: document.getElementById('cfgOwnerEmail')?.value.trim() || '',
+        emailIcloud: mail,
+        emailGoogle: mail,
         chavePix: document.getElementById('cfgPixKey')?.value.trim() || '',
         gasWebAppUrl: document.getElementById('cfgGasUrl')?.value.trim() || ''
       });
@@ -872,6 +975,7 @@ const DavidReformasApp = (() => {
       sugestao2ISO: s2Val ? new Date(s2Val).toISOString() : '',
       valorEstimado: summary.valorTotal
     });
+    lastCreatedVisit = created;
 
     const cfg = loadCloudConfig();
     const rawDest = String(cfg.whatsappProfissional || '').replace(/\D/g, '');
@@ -883,7 +987,8 @@ const DavidReformasApp = (() => {
       `👤 *Cliente:* ${created.nomeCliente}`,
       `📱 *WhatsApp:* ${created.whatsapp}`,
       `🏠 *Tipo de Imóvel:* ${created.tipoImovel}`,
-      `📍 *Bairro / Endereço:* ${created.enderecoObra}`,
+      `📍 *Endereço / Local:* ${created.enderecoObra}`,
+      `🗺️ *Mapa (iPhone/Waze):* https://maps.apple.com/?q=${encodeURIComponent(created.enderecoObra)}`,
       `🗓️ *Data e Hora Sugerida:* ${created.sugestao1Formatada}`,
       `🔄 *2ª Opção:* ${created.sugestao2Formatada}`,
       ``,
@@ -1013,6 +1118,9 @@ const DavidReformasApp = (() => {
             <button type="button" data-act="confirm" data-id="${escapeHtml(v.id)}" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">
               ✓ Confirmar Visita
             </button>
+            <button type="button" data-act="ics" data-id="${escapeHtml(v.id)}" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold flex items-center gap-1.5">
+              🍎 Agenda iPhone (.ics)
+            </button>
             <button type="button" data-act="wa" data-id="${escapeHtml(v.id)}" class="px-3.5 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white text-xs font-bold">
               💬 Chamar Cliente no WhatsApp
             </button>
@@ -1050,6 +1158,8 @@ const DavidReformasApp = (() => {
             saveAllVisits(all);
             renderAdminCalendarAndList();
             showToast(`Visita ${id} confirmada na agenda!`, 'emerald');
+          } else if (act === 'ics') {
+            downloadOrOpenIcs(item);
           } else if (act === 'wa') {
             const digits = String(item.whatsapp || '').replace(/\D/g, '');
             const phone = digits.startsWith('55') ? digits : `55${digits}`;
@@ -1290,7 +1400,7 @@ const DavidReformasApp = (() => {
     const cfg = loadCloudConfig();
     if (document.getElementById('cfgProfNome')) document.getElementById('cfgProfNome').value = cfg.profissionalNome || 'David Reformas — Pintura & Construção';
     if (document.getElementById('cfgOwnerWhatsapp')) document.getElementById('cfgOwnerWhatsapp').value = cfg.whatsappProfissional || '';
-    if (document.getElementById('cfgOwnerEmail')) document.getElementById('cfgOwnerEmail').value = cfg.emailGoogle || '';
+    if (document.getElementById('cfgOwnerEmail')) document.getElementById('cfgOwnerEmail').value = cfg.emailIcloud || cfg.emailGoogle || '';
     if (document.getElementById('cfgPixKey')) document.getElementById('cfgPixKey').value = cfg.chavePix || '';
   }
 
