@@ -25,37 +25,34 @@ const WhatsAppManager = (() => {
 
   /**
    * Monta o texto de convite de chamado para o WhatsApp do Administrador
-   * incluindo o link direto para aceitar no Google Agenda pelo celular
+   * Formatação limpa, objetiva e compacta (sem URLs gigantes ou caracteres corrompidos)
    */
-  function buildOwnerInviteMessage(ticket, googleCalendarUrl) {
-    return [
-      `🔔 *NOVO CONVITE DE CHAMADO REMOTO (${ticket.id})*`,
-      `━━━━━━━━━━━━━━━━━━━━━━━━`,
+  function buildOwnerInviteMessage(ticket) {
+    const lines = [
+      `💻 *NOVO CHAMADO REMOTO (${ticket.id})*`,
+      `━━━━━━━━━━━━━━━━━━━━`,
       `🏢 *Empresa:* ${ticket.empresa}`,
       `👤 *Solicitante:* ${ticket.nomeCliente}`,
-      `📱 *WhatsApp Cliente:* ${ticket.whatsapp}`,
-      `💻 *Acesso Remoto:* ${ticket.ferramentaRemota || 'AnyDesk'} ${ticket.idRemoto ? '(' + ticket.idRemoto + ')' : ''}`,
+      `📱 *WhatsApp:* ${ticket.whatsapp}`,
+      `🖥️ *Acesso:* ${ticket.ferramentaRemota || 'AnyDesk'}${ticket.idRemoto ? ' (' + ticket.idRemoto + ')' : ''}`,
+      `🗓️ *Horário:* ${ticket.sugestao1Formatada} (até ${ticket.horaFimComReserva})`,
+      ticket.sugestao2Formatada ? `🔄 *2ª Opção:* ${ticket.sugestao2Formatada}` : null,
       ``,
-      `🗓️ *1ª Sugestão de Horário:* ${ticket.sugestao1Formatada}`,
-      `⏳ *Janela Reservada:* ${ticket.horaInicio} às ${ticket.horaFimComReserva} _(já inclui +15 min de reserva)_`,
-      `🔄 *2ª Opção Sugerida:* ${ticket.sugestao2Formatada || 'Não informada'}`,
-      ``,
-      `🛠️ *Descrição / Serviços:*`,
-      `${ticket.descricao}`,
-      ``,
-      `📲 *Adicionar ao seu Google Agenda (1 toque no celular):*`,
-      `${googleCalendarUrl}`
-    ].join('\n');
+      `🛠️ *Serviços / Descrição:*`,
+      `${ticket.descricao}`
+    ].filter(line => line !== null);
+
+    return lines.join('\n');
   }
 
   /**
    * Dispara aviso silencioso gratuito via CallMeBot API (se configurado)
    * e retorna URL wa.me direta de forma síncrona (evitando bloqueio de pop-up no celular)
    */
-  function notifyOwnerOnWhatsApp(ticket, googleCalendarUrl) {
+  function notifyOwnerOnWhatsApp(ticket) {
     const cfg = SecurityManager.loadCloudConfig();
     const ownerPhone = normalizePhoneToE164(cfg.ownerWhatsapp);
-    const messageText = buildOwnerInviteMessage(ticket, googleCalendarUrl);
+    const messageText = buildOwnerInviteMessage(ticket);
 
     // Se o administrador configurou a chave gratuita do CallMeBot, envia silenciosamente em segundo plano
     if (cfg.callmebotApiKey && ownerPhone) {

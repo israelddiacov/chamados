@@ -502,18 +502,22 @@ const AppController = (() => {
     });
 
     // 1. Dispara imediatamente para o seu WhatsApp de forma síncrona no clique (evita bloqueio de pop-up no celular)
-    const gcalUrl = GoogleIntegration.generateGoogleCalendarInviteUrl(createdTicket, false);
-    const waResult = WhatsAppManager.notifyOwnerOnWhatsApp(createdTicket, gcalUrl);
+    const waResult = WhatsAppManager.notifyOwnerOnWhatsApp(createdTicket);
 
     if (waResult && waResult.waMeUrl) {
       window.open(waResult.waMeUrl, '_blank', 'noopener,noreferrer');
     }
 
-    // 2. Grava automaticamente em Segundo Plano na sua Google Agenda via Google Apps Script
+    // 2. Grava automaticamente em Segundo Plano na sua Google Agenda e envia alertas de servidor via Google Apps Script
+    const cfg = SecurityManager.loadCloudConfig();
     GoogleIntegration.callGoogleBackend({
       action: 'createTicketInvite',
       authHash: SecurityManager.getBackendCompatibleClientHash(),
-      ticket: createdTicket
+      ticket: {
+        ...createdTicket,
+        callmebotApiKey: cfg.callmebotApiKey || '',
+        ownerWhatsapp: cfg.ownerWhatsapp || '41999248171'
+      }
     });
 
     // 3. Atualiza o calendário ao fundo e mostra SOMENTE a mensagem confirmando o envio
