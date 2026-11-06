@@ -48,23 +48,6 @@ const AppController = (() => {
       renderAuthAndViews();
     });
 
-    // Login do Cliente
-    document.getElementById('formClientLogin')?.addEventListener('submit', e => {
-      e.preventDefault();
-      const passInput = document.getElementById('clientPasswordInput');
-      const res = SecurityManager.validateClientPassword(passInput.value);
-      const errEl = document.getElementById('clientLoginError');
-      if (!res.ok) {
-        errEl.textContent = res.error;
-        errEl.classList.remove('hidden');
-        return;
-      }
-      errEl.classList.add('hidden');
-      passInput.value = '';
-      renderAuthAndViews();
-      showToast('Acesso liberado! Clique em um dia do calendário para agendar.', 'emerald');
-    });
-
     // Login do Administrador
     document.getElementById('formAdminLogin')?.addEventListener('submit', e => {
       e.preventDefault();
@@ -235,17 +218,10 @@ const AppController = (() => {
       btnAdm?.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
       btnAdm?.classList.add('text-slate-700');
 
-      const clientLock = document.getElementById('clientLockScreen');
       const clientApp = document.getElementById('clientUnlockedContent');
-      if (SecurityManager.isClientAuthenticated()) {
-        clientLock?.classList.add('hidden');
-        clientApp?.classList.remove('hidden');
-        populateClientDropdowns();
-        renderClientAvailabilityCalendar();
-      } else {
-        clientLock?.classList.remove('hidden');
-        clientApp?.classList.add('hidden');
-      }
+      clientApp?.classList.remove('hidden');
+      populateClientDropdowns();
+      renderClientAvailabilityCalendar();
     } else {
       secClienteWrap?.classList.add('hidden');
       secAdminWrap?.classList.remove('hidden');
@@ -1259,23 +1235,23 @@ const AppController = (() => {
 
   async function handleUpdatePasswordsSubmit(e) {
     e.preventDefault();
-    const newCli = document.getElementById('inputNewClientPass')?.value;
     const newAdm = document.getElementById('inputNewAdminPass')?.value;
-    const res = SecurityManager.updatePasswords(newCli, newAdm);
+    const res = SecurityManager.updatePasswords('', newAdm);
 
     if (!res.ok) {
       showToast(res.error, 'rose');
       return;
     }
 
-    document.getElementById('inputNewClientPass').value = '';
-    document.getElementById('inputNewAdminPass').value = '';
+    if (document.getElementById('inputNewAdminPass')) {
+      document.getElementById('inputNewAdminPass').value = '';
+    }
 
     const driveRes = await GoogleIntegration.saveSecurityCsvToGoogleDrive(res.securityCsv);
     if (driveRes && driveRes.ok) {
-      showToast('Senhas embaralhadas e salvas no acessos_seguranca.csv do seu Google Drive!', 'emerald');
+      showToast('Nova senha do administrador embaralhada e salva no seu Google Drive!', 'emerald');
     } else {
-      showToast('Senhas embaralhadas atualizadas! Você também pode baixar o acessos_seguranca.csv.', 'emerald');
+      showToast('Nova senha do administrador atualizada com sucesso!', 'emerald');
     }
   }
 

@@ -213,8 +213,8 @@ const SecurityManager = (() => {
   }
 
   function isClientAuthenticated() {
-    const token = sessionStorage.getItem(STORAGE_KEYS.CLIENT_SESSION);
-    return Boolean(token && token === getExpectedClientHash());
+    // Área de abertura de chamados livre e aberta ao público (sem exigência de senha)
+    return true;
   }
 
   function isAdminAuthenticated() {
@@ -231,24 +231,15 @@ const SecurityManager = (() => {
   }
 
   /**
-   * Gera novos Salts, embaralha as novas senhas (garantindo que sejam diferentes)
-   * e atualiza o conteúdo de acessos_seguranca.csv
+   * Gera novos Salts, embaralha as novas senhas e atualiza o conteúdo de acessos_seguranca.csv
    */
   function updatePasswords(newClientPass, newAdminPass) {
-    const clientClean = String(newClientPass || '').trim();
-    const adminClean = String(newAdminPass || '').trim();
+    const adminClean = String(newAdminPass || newClientPass || '').trim();
 
-    if (clientClean.length < 4 || adminClean.length < 6) {
+    if (adminClean.length < 6) {
       return {
         ok: false,
-        error: 'A senha do cliente deve ter no mínimo 4 caracteres e a do administrador no mínimo 6.'
-      };
-    }
-
-    if (clientClean.toLowerCase() === adminClean.toLowerCase()) {
-      return {
-        ok: false,
-        error: 'As senhas da Área do Cliente e do Painel Administrativo DEVEM ser diferentes!'
+        error: 'A senha do administrador deve ter no mínimo 6 caracteres.'
       };
     }
 
@@ -256,6 +247,7 @@ const SecurityManager = (() => {
     const clientSalt = `SL-${rand4()}-CLI`;
     const adminSalt = `SL-${rand4()}-ADM`;
 
+    const clientClean = String(newClientPass || '').trim() || 'publico_livre';
     const clientHash = scramblePasswordWithSalt(clientClean, clientSalt);
     const adminHash = scramblePasswordWithSalt(adminClean, adminSalt);
     const today = new Date().toISOString().slice(0, 10);

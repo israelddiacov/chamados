@@ -57,134 +57,81 @@
   <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 
     <!-- ======================================================================
-         VISÃO 1: ÁREA DO CLIENTE (VITRINE + LOGIN + CALENDÁRIO INTERATIVO)
+         VISÃO 1: ÁREA DO CLIENTE (VITRINE COMERCIAL + CALENDÁRIO ABERTO)
          ====================================================================== -->
-    <section id="sectionClienteWrapper" class="space-y-8">
+    <section id="sectionClienteWrapper" class="space-y-8 animate-spring-up">
 
-      <!-- TELA INICIAL ANTES DA SENHA: BANNERS SOBRE OS TRABALHOS + QUADRO DE ACESSO -->
-      <div id="clientLockScreen" class="space-y-8 animate-spring-up">
-
-        <!-- Banner Principal de Apresentação Comercial -->
-        <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 rounded-2xl p-8 sm:p-10 text-white shadow-md">
-          <div class="max-w-3xl space-y-4">
-            <span class="inline-block px-3.5 py-1 rounded-full bg-white/20 text-white text-sm font-bold tracking-wide">
-              ATENDIMENTO 100% REMOTO PARA EMPRESAS
-            </span>
-            <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight">
-              Instalação de Programas, Configuração de E-mails e Solução de Problemas no Windows sem Parar sua Equipe
-            </h2>
-            <p class="text-base sm:text-lg text-blue-100 leading-relaxed">
-              Sem espera por deslocamento técnico. Conectamos remotamente no computador do colaborador no horário combinado e deixamos tudo instalado, configurado e pronto para trabalhar.
-            </p>
-          </div>
-        </div>
-
-        <!-- Grade: 3 Banners de Serviços + Quadro de Senha de Acesso -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-          <!-- Coluna Esquerda (7 colunas): Banners dos Trabalhos Realizados -->
-          <div class="lg:col-span-7 space-y-5">
-            <h3 class="text-xl font-extrabold text-slate-900">
-              Conheça os Serviços que Realizamos Remotamente:
-            </h3>
-
-            <!-- Banner 1: Engenharia e Design -->
-            <div class="corp-banner-card p-6 flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center text-2xl shrink-0">
-                📐
-              </div>
-              <div class="space-y-1.5">
-                <h4 class="text-lg font-bold text-slate-900">
-                  Programas de Engenharia, Arquitetura & Design
-                </h4>
-                <p class="text-base text-slate-600 leading-relaxed">
-                  Instalação e configuração completa de <strong>Autodesk AutoCAD</strong>, <strong>Autodesk Revit</strong> (incluindo bibliotecas e templates BIM), <strong>Adobe Photoshop</strong> e <strong>CorelDraw</strong>, utilizando as licenças originais da sua empresa.
-                </p>
-              </div>
-            </div>
-
-            <!-- Banner 2: Office e E-mail -->
-            <div class="corp-banner-card p-6 flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center text-2xl shrink-0">
-                📧
-              </div>
-              <div class="space-y-1.5">
-                <h4 class="text-lg font-bold text-slate-900">
-                  Pacote Office, Utilitários & E-mail Corporativo
-                </h4>
-                <p class="text-base text-slate-600 leading-relaxed">
-                  Instalação ou reinstalação de <strong>Microsoft Office</strong> (Word, Excel, PowerPoint, Outlook), <strong>Project</strong>, <strong>Visio</strong> e <strong>Adobe Acrobat Reader</strong>, além da configuração de contas de e-mail corporativo com <strong>assinatura padronizada</strong>.
-                </p>
-              </div>
-            </div>
-
-            <!-- Banner 3: Manutenção do Windows -->
-            <div class="corp-banner-card p-6 flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-2xl shrink-0">
-                🛠️
-              </div>
-              <div class="space-y-1.5">
-                <h4 class="text-lg font-bold text-slate-900">
-                  Correção de Problemas no Windows & Impressoras
-                </h4>
-                <p class="text-base text-slate-600 leading-relaxed">
-                  Diagnóstico e solução de lentidão, erros de sistema, atualizações, backup/migração de arquivos de usuário e configuração de <strong>impressoras e scanners em rede</strong>.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Coluna Direita (5 colunas): Quadro de Senha para Agendar Chamado -->
-          <div class="lg:col-span-5">
-            <div class="corp-card p-7 sm:p-8 space-y-6 border-2 border-blue-100">
-              <div class="flex items-center gap-3.5">
-                <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center text-2xl shrink-0">
-                  🔑
-                </div>
-                <div>
-                  <span class="text-sm font-bold text-blue-600 uppercase tracking-wide">Agendamento Online</span>
-                  <h3 class="text-2xl font-extrabold text-slate-900">Acessar Portal do Cliente</h3>
-                </div>
-              </div>
-
-              <p class="text-base text-slate-600 leading-relaxed">
-                Para visualizar o calendário de disponibilidade e agendar um atendimento remoto, digite a senha de acesso da sua empresa:
-              </p>
-
-              <form id="formClientLogin" class="space-y-4">
-                <div>
-                  <label for="clientPasswordInput" class="block text-base font-bold text-slate-800 mb-2">
-                    Senha de Acesso da Empresa
-                  </label>
-                  <div class="relative">
-                    <input id="clientPasswordInput" type="password" required placeholder="Digite a senha de acesso..."
-                      class="w-full px-4 py-3.5 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition" />
-                    <button type="button" onclick="const i=document.getElementById('clientPasswordInput'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
-                      class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-                      👁️ Mostrar
-                    </button>
-                  </div>
-                </div>
-
-                <p id="clientLoginError" class="hidden text-sm text-rose-700 font-semibold bg-rose-50 border border-rose-200 rounded-xl p-3.5"></p>
-
-                <button type="submit"
-                  class="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base shadow-sm transition">
-                  Entrar e Ver Calendário ➔
-                </button>
-              </form>
-
-              <div class="pt-4 border-t border-slate-200 text-sm text-slate-600">
-                Atendimento exclusivo para empresas conveniadas. Caso não possua a senha, solicite ao responsável do seu setor.
-              </div>
-            </div>
-          </div>
-
+      <!-- Banner Principal de Apresentação Comercial -->
+      <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 rounded-2xl p-8 sm:p-10 text-white shadow-md">
+        <div class="max-w-3xl space-y-4">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-white/20 text-white text-sm font-bold tracking-wide">
+            ATENDIMENTO 100% REMOTO PARA EMPRESAS
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight">
+            Instalação de Programas, Configuração de E-mails e Solução de Problemas no Windows sem Parar sua Equipe
+          </h2>
+          <p class="text-base sm:text-lg text-blue-100 leading-relaxed">
+            Sem espera por deslocamento técnico. Conectamos remotamente no computador do colaborador no horário combinado e deixamos tudo instalado, configurado e pronto para trabalhar. Escolha o melhor dia no calendário abaixo para agendar seu atendimento sem necessidade de senha.
+          </p>
         </div>
       </div>
 
-      <!-- TELA DO CLIENTE DESBLOQUEADA: CALENDÁRIO DE DISPONIBILIDADE (MOSTRA HORÁRIOS OCUPADOS) -->
-      <div id="clientUnlockedContent" class="hidden space-y-6 animate-spring-up">
+      <!-- 3 Banners dos Serviços Realizados em Grade Aberta -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-extrabold text-slate-900">
+          Conheça os Serviços que Realizamos Remotamente:
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Banner 1: Engenharia e Design -->
+          <div class="corp-banner-card p-6 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center text-2xl shrink-0">
+                📐
+              </div>
+              <h4 class="text-lg font-bold text-slate-900">
+                Programas de Engenharia, Arquitetura & Design
+              </h4>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Instalação e configuração completa de <strong>Autodesk AutoCAD</strong>, <strong>Autodesk Revit</strong> (incluindo bibliotecas e templates BIM), <strong>Adobe Photoshop</strong> e <strong>CorelDraw</strong>, utilizando as licenças originais da sua empresa.
+              </p>
+            </div>
+          </div>
+
+          <!-- Banner 2: Office e E-mail -->
+          <div class="corp-banner-card p-6 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center text-2xl shrink-0">
+                📧
+              </div>
+              <h4 class="text-lg font-bold text-slate-900">
+                Pacote Office, Utilitários & E-mail Corporativo
+              </h4>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Instalação ou reinstalação de <strong>Microsoft Office</strong> (Word, Excel, PowerPoint, Outlook), <strong>Project</strong>, <strong>Visio</strong> e <strong>Adobe Acrobat Reader</strong>, além da configuração de contas de e-mail corporativo com <strong>assinatura padronizada</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Banner 3: Manutenção do Windows -->
+          <div class="corp-banner-card p-6 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center text-2xl shrink-0">
+                🛠️
+              </div>
+              <h4 class="text-lg font-bold text-slate-900">
+                Correção de Problemas no Windows & Impressoras
+              </h4>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Diagnóstico e solução de lentidão, erros de sistema, atualizações, backup/migração de arquivos de usuário e configuração de <strong>impressoras e scanners em rede</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALENDÁRIO DE DISPONIBILIDADE ABERTO (MOSTRA HORÁRIOS OCUPADOS) -->
+      <div id="clientUnlockedContent" class="space-y-6 animate-spring-up">
 
         <!-- Barra de Instrução para o Cliente -->
         <div class="corp-card px-6 py-4 flex flex-wrap items-center justify-between gap-4 bg-blue-50/70 border-blue-200">
@@ -195,14 +142,10 @@
                 Selecione um Dia no Calendário para Agendar seu Atendimento
               </h2>
               <p class="text-sm sm:text-base text-slate-600">
-                Os horários em vermelho indicam janelas já ocupadas. Clique no dia desejado para abrir o agendamento.
+                Os horários em vermelho indicam janelas já ocupadas. Clique no dia desejado para abrir o agendamento diretamente.
               </p>
             </div>
           </div>
-          <button id="btnLogoutClient" type="button"
-            class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-sm font-bold transition">
-            Sair
-          </button>
         </div>
 
         <!-- Calendário Mensal do Cliente (Igual ao da Área Técnica, Exibindo Horários Ocupados) -->
@@ -841,20 +784,16 @@
                 Nenhuma senha fica em texto aberto no código. Ao alterar abaixo, o sistema gera um novo código embaralhado (<em>Salt + Hash SHA-256</em>) e salva no arquivo <code class="bg-slate-100 px-1.5 py-0.5 rounded">acessos_seguranca.csv</code> do seu Google Drive.
               </p>
 
+              <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-sm text-emerald-800 flex items-center gap-3">
+                <span class="text-xl">🔓</span>
+                <p>
+                  <strong>Abertura de Chamados Livre:</strong> Os clientes podem acessar o calendário e abrir chamados diretamente, sem necessidade de senha.
+                </p>
+              </div>
+
               <form id="formUpdatePasswords" class="space-y-4">
                 <div>
-                  <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha da Área do Cliente</label>
-                  <div class="relative">
-                    <input id="inputNewClientPass" type="password" required placeholder="Digite a nova senha dos clientes..."
-                      class="w-full px-4 py-3 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
-                    <button type="button" onclick="const i=document.getElementById('inputNewClientPass'); i.type=i.type==='password'?'text':'password'; this.textContent=i.type==='password'?'👁️ Mostrar':'🙈 Ocultar';"
-                      class="absolute right-2.5 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg bg-slate-200/80 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">
-                      👁️ Mostrar
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha do Administrador (Diferente da do Cliente)</label>
+                  <label class="block text-sm font-bold text-slate-800 mb-1.5">Nova Senha do Administrador / Área Técnica</label>
                   <div class="relative">
                     <input id="inputNewAdminPass" type="password" required placeholder="Digite sua nova senha de administrador..."
                       class="w-full px-4 py-3 pr-24 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base" />
