@@ -29,7 +29,7 @@ const GoogleIntegration = (() => {
       `🏢 Empresa: ${ticket.empresa}`,
       `👤 Funcionário/Cliente: ${ticket.nomeCliente}`,
       `📱 WhatsApp: ${ticket.whatsapp}`,
-      `💻 Acesso Remoto: ${ticket.ferramentaRemota || 'AnyDesk'} ${ticket.idRemoto ? '(' + ticket.idRemoto + ')' : ''}`,
+      `💻 Acesso Remoto: ${ticket.ferramentaRemota || 'Assistência Rápida (Windows)'} ${ticket.idRemoto ? '(' + ticket.idRemoto + ')' : ''}`,
       `⏱️ Atendimento: ${win.horaInicio} às ${win.horaFimServico} (+15 min de reserva até ${win.horaFimComReserva})`,
       `📅 2ª Sugestão Alternativa: ${ticket.sugestao2Formatada || 'Não informada'}`,
       ``,
@@ -43,7 +43,7 @@ const GoogleIntegration = (() => {
       text: title,
       dates: `${startUTC}/${endUTC}`,
       details: details,
-      location: `Atendimento 100% Remoto (${ticket.ferramentaRemota || 'AnyDesk'})`,
+      location: `Atendimento 100% Remoto (${ticket.ferramentaRemota || 'Assistência Rápida (Windows)'})`,
       trp: 'true'
     };
     if (ownerEmail) paramsObj.add = ownerEmail;
@@ -82,7 +82,7 @@ const GoogleIntegration = (() => {
       `DTEND:${endUTC}`,
       `SUMMARY:[CHAMADO REMOTO] ${ticket.empresa} - ${ticket.nomeCliente}`,
       `DESCRIPTION:WhatsApp: ${ticket.whatsapp}\\nAcesso: ${ticket.ferramentaRemota} ${ticket.idRemoto}\\nJanela com 15m reserva: ${win.horaInicio} as ${win.horaFimComReserva}\\n\\n${cleanDesc}`,
-      `LOCATION:Atendimento Remoto (${ticket.ferramentaRemota || 'AnyDesk'})`,
+      `LOCATION:Atendimento Remoto (${ticket.ferramentaRemota || 'Assistência Rápida (Windows)'})`,
       `ORGANIZER;CN="Suporte Diacov":mailto:${ownerEmail}`,
       'STATUS:TENTATIVE',
       'BEGIN:VALARM',

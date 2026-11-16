@@ -34,7 +34,7 @@ const WhatsAppManager = (() => {
       `🏢 *Empresa:* ${ticket.empresa}`,
       `👤 *Solicitante:* ${ticket.nomeCliente}`,
       `📱 *WhatsApp:* ${ticket.whatsapp}`,
-      `🖥️ *Acesso:* ${ticket.ferramentaRemota || 'AnyDesk'}${ticket.idRemoto ? ' (' + ticket.idRemoto + ')' : ''}`,
+      `🖥️ *Acesso:* ${ticket.ferramentaRemota || 'Assistência Rápida (Windows)'}${ticket.idRemoto ? ' (' + ticket.idRemoto + ')' : ''}`,
       `🗓️ *Horário:* ${ticket.sugestao1Formatada} (até ${ticket.horaFimComReserva})`,
       ticket.sugestao2Formatada ? `🔄 *2ª Opção:* ${ticket.sugestao2Formatada}` : null,
       ``,
@@ -79,18 +79,24 @@ const WhatsAppManager = (() => {
    */
   function openClientConfirmationWhatsApp(ticket) {
     const clientPhone = normalizePhoneToE164(ticket.whatsapp);
-    const msg = [
+    const ferramenta = ticket.ferramentaRemota || 'Assistência Rápida (Windows)';
+    const isAssistenciaRapida = ferramenta.toLowerCase().includes('assist');
+
+    const msgLines = [
       `Olá, *${ticket.nomeCliente}* (${ticket.empresa})! 👋`,
       ``,
       `Seu chamado de suporte remoto *${ticket.id}* foi *CONFIRMADO* na agenda! ✅`,
       ``,
       `🗓️ *Data e Horário Confirmado:* ${ticket.sugestao1Formatada}`,
-      `💻 *Conexão Remota:* ${ticket.ferramentaRemota || 'AnyDesk'} ${ticket.idRemoto ? '(' + ticket.idRemoto + ')' : ''}`,
+      `💻 *Conexão Remota:* ${ferramenta}${ticket.idRemoto ? ' (' + ticket.idRemoto + ')' : ''}`,
+      isAssistenciaRapida
+        ? `💡 *Como conectar:* No horário combinado, pressione *Ctrl + Win + Q* no seu Windows para abrir a Assistência Rápida e digitar o código de 6 dígitos que enviarei aqui.`
+        : null,
       ``,
       `Por favor, deixe o computador ligado e conectado à internet no horário agendado. Qualquer dúvida estou à disposição!`
-    ].join('\n');
+    ].filter(line => line !== null);
 
-    const url = `https://wa.me/${clientPhone}?text=${encodeURIComponent(msg)}`;
+    const url = `https://wa.me/${clientPhone}?text=${encodeURIComponent(msgLines.join('\n'))}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 

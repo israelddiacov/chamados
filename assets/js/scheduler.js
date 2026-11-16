@@ -240,7 +240,7 @@ const SchedulerManager = (() => {
       empresa: ticketData.empresa,
       nomeCliente: ticketData.nomeCliente,
       whatsapp: ticketData.whatsapp,
-      ferramentaRemota: ticketData.ferramentaRemota || 'AnyDesk',
+      ferramentaRemota: ticketData.ferramentaRemota || 'Assistência Rápida (Windows)',
       idRemoto: ticketData.idRemoto || '',
       servicosCodigos: ticketData.servicosCodigos || [],
       servicosNomes: ticketData.servicosNomes || [],

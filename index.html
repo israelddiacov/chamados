@@ -71,7 +71,7 @@
             Instalação de Programas, Configuração de E-mails e Solução de Problemas no Windows sem Parar sua Equipe
           </h2>
           <p class="text-base sm:text-lg text-blue-100 leading-relaxed">
-            Sem espera por deslocamento técnico. Conectamos remotamente no computador do colaborador no horário combinado e deixamos tudo instalado, configurado e pronto para trabalhar. Escolha o melhor dia no calendário abaixo para agendar seu atendimento sem necessidade de senha.
+            Sem espera por deslocamento técnico e <strong>sem precisar instalar programas de acesso</strong>: conectamos direto pela <strong>Assistência Rápida nativa do Windows</strong> (atalho <code class="bg-white/20 px-1.5 py-0.5 rounded font-bold">Ctrl + Win + Q</code>) no horário combinado. Escolha o melhor dia no calendário abaixo.
           </p>
         </div>
       </div>
@@ -341,9 +341,11 @@
                 <label for="selectEmpresaCliente" class="block text-base font-bold text-slate-800 mb-2">
                   Sua Empresa <span class="text-blue-600">*</span>
                 </label>
-                <select id="selectEmpresaCliente" required
-                  class="w-full max-w-full min-w-0 truncate px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium focus:bg-white focus:outline-none focus:border-blue-600">
-                </select>
+                <input id="selectEmpresaCliente" type="text" list="listaEmpresasDatalist" required
+                  placeholder="Selecione na lista ou digite sua empresa..."
+                  autocomplete="off"
+                  class="w-full max-w-full min-w-0 px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
+                <datalist id="listaEmpresasDatalist"></datalist>
               </div>
 
               <div class="min-w-0">
@@ -368,7 +370,8 @@
                     Acesso Remoto
                   </label>
                   <select id="selectFerramentaRemota"
-                    class="w-full max-w-full min-w-0 truncate px-3 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base focus:bg-white focus:outline-none focus:border-blue-600">
+                    class="w-full max-w-full min-w-0 truncate px-3 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-semibold focus:bg-white focus:outline-none focus:border-blue-600">
+                    <option value="Assistência Rápida (Windows)" selected>Assistência Rápida (Windows - Recomendado)</option>
                     <option value="AnyDesk">AnyDesk</option>
                     <option value="TeamViewer">TeamViewer</option>
                     <option value="RustDesk">RustDesk</option>
@@ -379,10 +382,18 @@
                   <label for="inputIdRemoto" class="block text-base font-bold text-slate-800 mb-2">
                     ID (Opcional)
                   </label>
-                  <input id="inputIdRemoto" type="text" placeholder="Se tiver"
+                  <input id="inputIdRemoto" type="text" placeholder="Só se usar AnyDesk/TV"
                     class="w-full max-w-full min-w-0 px-3 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
                 </div>
               </div>
+            </div>
+
+            <!-- Dica de Conexão Nativa Assistência Rápida -->
+            <div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-sm text-blue-900 flex items-start gap-2.5">
+              <span class="text-lg shrink-0">💡</span>
+              <p>
+                <strong>Assistência Rápida (Recomendado):</strong> Já vem instalada em todo Windows 10/11 — não precisa baixar nada! Na hora do atendimento, basta pressionar <kbd class="px-1.5 py-0.5 rounded bg-white border border-blue-300 font-mono text-xs font-bold">Ctrl</kbd> + <kbd class="px-1.5 py-0.5 rounded bg-white border border-blue-300 font-mono text-xs font-bold">Win</kbd> + <kbd class="px-1.5 py-0.5 rounded bg-white border border-blue-300 font-mono text-xs font-bold">Q</kbd> e digitar o código de 6 dígitos que enviaremos no WhatsApp.
+              </p>
             </div>
 
             <!-- Caixa de Pergunta de Confirmação ("Tem certeza?") -->

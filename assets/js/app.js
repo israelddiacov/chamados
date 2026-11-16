@@ -444,7 +444,7 @@ const AppController = (() => {
   function handlePreConcludeValidation() {
     const s1Val = document.getElementById('inputSugestao1')?.value;
     const descVal = document.getElementById('inputDescricaoChamado')?.value.trim();
-    const empresa = document.getElementById('selectEmpresaCliente')?.value;
+    const empresa = document.getElementById('selectEmpresaCliente')?.value.trim();
     const nomeCliente = document.getElementById('inputNomeCliente')?.value.trim();
     const whatsapp = document.getElementById('inputWhatsapp')?.value.trim();
 
@@ -505,10 +505,10 @@ const AppController = (() => {
    * 4. Mostra SOMENTE a mensagem final confirmando o envio (sem mais botões ou opções)
    */
   function handleFinalConfirmAndSend() {
-    const empresa = document.getElementById('selectEmpresaCliente')?.value || 'RFranco Engenharia';
+    const empresa = document.getElementById('selectEmpresaCliente')?.value.trim() || 'Atendimento Particular';
     const nomeCliente = document.getElementById('inputNomeCliente')?.value.trim();
     const whatsapp = document.getElementById('inputWhatsapp')?.value.trim();
-    const ferramentaRemota = document.getElementById('selectFerramentaRemota')?.value || 'AnyDesk';
+    const ferramentaRemota = document.getElementById('selectFerramentaRemota')?.value || 'Assistência Rápida (Windows)';
     const idRemoto = document.getElementById('inputIdRemoto')?.value.trim() || '';
     const s1Val = document.getElementById('inputSugestao1')?.value;
     const s2Val = document.getElementById('inputSugestao2')?.value;
@@ -564,15 +564,11 @@ const AppController = (() => {
 
   function populateClientDropdowns() {
     const companies = CatalogManager.parseCompaniesCsv().filter(c => c.ativo);
-    const selectCompany = document.getElementById('selectEmpresaCliente');
-    if (selectCompany) {
-      const currentVal = selectCompany.value;
-      selectCompany.innerHTML = companies
-        .map(c => `<option value="${escapeHtml(c.nome)}">${escapeHtml(c.nome)}</option>`)
+    const datalist = document.getElementById('listaEmpresasDatalist');
+    if (datalist) {
+      datalist.innerHTML = companies
+        .map(c => `<option value="${escapeHtml(c.nome)}"></option>`)
         .join('');
-      if (currentVal && companies.some(c => c.nome === currentVal)) {
-        selectCompany.value = currentVal;
-      }
     }
 
     const services = CatalogManager.parseServicesCsv();
