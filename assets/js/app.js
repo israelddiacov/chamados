@@ -100,6 +100,18 @@ const AppController = (() => {
         document.getElementById('inputSugestao1')?.focus();
         return;
       }
+
+      const summary = CatalogManager.calculateServicesSummary(selectedServiceCodes);
+      const conflict = SchedulerManager.checkScheduleConflict(
+        new Date(s1Val).toISOString(),
+        summary.duracaoMinutos
+      );
+      if (conflict.hasConflict && conflict.isBlockedWindow) {
+        showToast(conflict.message, 'rose');
+        document.getElementById('inputSugestao1')?.focus();
+        return;
+      }
+
       setWizardStep(2);
     });
 
@@ -278,8 +290,8 @@ const AppController = (() => {
 
       const busyBadgesHtml =
         dayTickets.length === 0
-          ? `<div class="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-2 py-1 mt-1">
-               🟢 Horários livres
+          ? `<div class="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-2 py-1 mt-1" title="Bloqueado diariamente: 08:00-11:00 e 13:30-17:30">
+               🟢 Livre: 11:00-13:30 / 17:30+
              </div>`
           : dayTickets
               .map(
@@ -337,25 +349,35 @@ const AppController = (() => {
 
     const busyContainer = document.getElementById('wizardDayBusySlotsList');
     if (busyContainer) {
-      if (dayBusy.length === 0) {
-        busyContainer.innerHTML = `<span class="px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-800 text-sm font-bold">🟢 Todos os horários estão livres neste dia!</span>`;
-      } else {
-        busyContainer.innerHTML = dayBusy
-          .map(
-            t =>
-              `<span class="px-3 py-1.5 rounded-lg bg-rose-100 border border-rose-200 text-rose-800 text-sm font-bold">
-                🔴 Ocupado: ${t.horaInicio} às ${t.horaFimComReserva}
-              </span>`
-          )
-          .join('');
-      }
+      const blockedHtml = SchedulerManager.getDailyBlockedWindows()
+        .map(
+          b =>
+            `<span class="px-3 py-1.5 rounded-lg bg-slate-200 border border-slate-300 text-slate-800 text-sm font-bold">
+              🔒 Bloqueado: ${b.label}
+            </span>`
+        )
+        .join('');
+
+      const ticketsHtml =
+        dayBusy.length === 0
+          ? `<span class="px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-800 text-sm font-bold">🟢 Livre: 11:00 às 13:30 e a partir das 17:30</span>`
+          : dayBusy
+              .map(
+                t =>
+                  `<span class="px-3 py-1.5 rounded-lg bg-rose-100 border border-rose-200 text-rose-800 text-sm font-bold">
+                    🔴 Ocupado: ${t.horaInicio} às ${t.horaFimComReserva}
+                  </span>`
+              )
+              .join('');
+
+      busyContainer.innerHTML = blockedHtml + ticketsHtml;
     }
 
-    // Define horário inicial sugerido (ex: 09:00 e 14:30 no dia clicado)
+    // Define horário inicial sugerido dentro das janelas livres (18:00 e 11:30 no dia clicado)
     const s1Input = document.getElementById('inputSugestao1');
     const s2Input = document.getElementById('inputSugestao2');
-    if (s1Input) s1Input.value = `${dateIsoYYYYMMDD}T09:00`;
-    if (s2Input) s2Input.value = `${dateIsoYYYYMMDD}T14:30`;
+    if (s1Input) s1Input.value = `${dateIsoYYYYMMDD}T18:00`;
+    if (s2Input) s2Input.value = `${dateIsoYYYYMMDD}T11:30`;
 
     // Reseta o estado do modal para a Página 1
     document.getElementById('wizardConfirmPromptBox')?.classList.add('hidden');
@@ -429,6 +451,17 @@ const AppController = (() => {
     if (!s1Val) {
       setWizardStep(1);
       showToast('Preencha a 1ª sugestão de dia e horário.', 'rose');
+      return;
+    }
+
+    const summaryCheck = CatalogManager.calculateServicesSummary(selectedServiceCodes);
+    const conflictCheck = SchedulerManager.checkScheduleConflict(
+      new Date(s1Val).toISOString(),
+      summaryCheck.duracaoMinutos
+    );
+    if (conflictCheck.hasConflict && conflictCheck.isBlockedWindow) {
+      setWizardStep(1);
+      showToast(conflictCheck.message, 'rose');
       return;
     }
 
@@ -664,7 +697,9 @@ const AppController = (() => {
 
     if (conflictEl) {
       if (conflict.hasConflict) {
-        conflictEl.textContent = `⚠️ Este horário coincide com um período já ocupado neste dia. Por favor, ajuste o horário ou informe uma 2ª opção.`;
+        conflictEl.textContent = conflict.isBlockedWindow
+          ? `🔒 ${conflict.message}`
+          : `⚠️ Este horário coincide com um período já ocupado neste dia. Por favor, ajuste o horário ou informe uma 2ª opção.`;
         conflictEl.classList.remove('hidden');
       } else {
         conflictEl.classList.add('hidden');

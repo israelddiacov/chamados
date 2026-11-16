@@ -11,6 +11,16 @@ const SchedulerManager = (() => {
   const STORAGE_KEY_TICKETS = 'diacov_tickets_db_v1';
   const BUFFER_MINUTES = 15;
 
+  // Bloqueios fixos diários (todos os dias da semana)
+  const DAILY_BLOCKED_WINDOWS = [
+    { startHour: 8, startMin: 0, endHour: 11, endMin: 0, label: '08:00 às 11:00' },
+    { startHour: 13, startMin: 30, endHour: 17, endMin: 30, label: '13:30 às 17:30' }
+  ];
+
+  function getDailyBlockedWindows() {
+    return DAILY_BLOCKED_WINDOWS.map(w => ({ ...w }));
+  }
+
   function pad2(n) {
     return String(n).padStart(2, '0');
   }
@@ -56,13 +66,35 @@ const SchedulerManager = (() => {
   }
 
   /**
-   * Verifica se uma nova janela colide com chamados já confirmados (incluindo os 15 min de reserva)
+   * Verifica se uma nova janela colide com os bloqueios fixos diários ou com chamados já agendados
    */
   function checkScheduleConflict(startIso, durationMinutes, ignoreTicketId = null) {
     const candidate = calculateWindowWithBuffer(startIso, durationMinutes);
-    const candStart = new Date(candidate.startIso).getTime();
+    const candStartDate = new Date(candidate.startIso);
+    const candStart = candStartDate.getTime();
+    const candEndService = new Date(candidate.endServiceIso).getTime();
     const candEnd = new Date(candidate.endWithBufferIso).getTime();
 
+    // 1. Verifica bloqueios fixos diários (08:00-11:00 e 13:30-17:30)
+    const y = candStartDate.getFullYear();
+    const m = candStartDate.getMonth();
+    const d = candStartDate.getDate();
+
+    for (const block of DAILY_BLOCKED_WINDOWS) {
+      const blockStart = new Date(y, m, d, block.startHour, block.startMin, 0).getTime();
+      const blockEnd = new Date(y, m, d, block.endHour, block.endMin, 0).getTime();
+
+      if (candStart < blockEnd && candEndService > blockStart) {
+        return {
+          hasConflict: true,
+          isBlockedWindow: true,
+          blockedWindow: block,
+          message: `Horário indisponível: o período das ${block.label} está bloqueado todos os dias. Escolha horários entre 11:00 e 13:30 ou a partir das 17:30.`
+        };
+      }
+    }
+
+    // 2. Verifica conflitos com chamados já existentes (incluindo os 15 min de reserva)
     const tickets = getAllTickets();
     for (const t of tickets) {
       if (t.id === ignoreTicketId) continue;
@@ -75,13 +107,14 @@ const SchedulerManager = (() => {
       if (candStart < exEnd && candEnd > exStart) {
         return {
           hasConflict: true,
+          isBlockedWindow: false,
           conflictingTicket: t,
           message: `Conflito com atendimento de ${t.nomeCliente} (${t.empresa}) das ${existingWin.horaInicio} às ${existingWin.horaFimComReserva} (já inclui 15m de reserva).`
         };
       }
     }
 
-    return { hasConflict: false };
+    return { hasConflict: false, isBlockedWindow: false };
   }
 
   /**
@@ -258,6 +291,7 @@ const SchedulerManager = (() => {
 
   return {
     BUFFER_MINUTES,
+    getDailyBlockedWindows,
     formatDateBR,
     formatTimeBR,
     formatDateTimeBR,
