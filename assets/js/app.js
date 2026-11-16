@@ -151,6 +151,22 @@ const AppController = (() => {
       e.preventDefault();
     });
 
+    // Combobox Sua Empresa ou Casa (seleção na lista ou digitação livre)
+    document.getElementById('selectEmpresaLista')?.addEventListener('change', e => {
+      const val = e.target.value;
+      const customInput = document.getElementById('selectEmpresaCliente');
+      if (!customInput) return;
+
+      if (val === '__OUTRA__') {
+        customInput.classList.remove('hidden');
+        customInput.value = '';
+        customInput.focus();
+      } else {
+        customInput.classList.add('hidden');
+        customInput.value = val;
+      }
+    });
+
     // Máscara de WhatsApp
     const waInput = document.getElementById('inputWhatsapp');
     waInput?.addEventListener('input', e => {
@@ -282,8 +298,29 @@ const AppController = (() => {
       cellsHtml += `<div class="min-h-[110px] rounded-xl bg-slate-50 border border-slate-100"></div>`;
     }
 
+    const now = new Date();
+    const todayStartMs = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
     for (let d = 1; d <= daysInMonth; d++) {
       const dayIsoPrefix = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const cellDateMs = new Date(year, month, d).getTime();
+      const isPastDay = cellDateMs < todayStartMs;
+
+      if (isPastDay) {
+        cellsHtml += `
+          <div class="min-h-[110px] p-3 rounded-xl border bg-slate-100/80 border-slate-200 opacity-60 cursor-not-allowed flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-base font-bold text-slate-400">${String(d).padStart(2, '0')}</span>
+            </div>
+            <div class="mt-2">
+              <div class="text-xs font-semibold text-slate-500 bg-slate-200/70 border border-slate-300 rounded-lg px-2 py-1 truncate">
+                🔒 Data encerrada
+              </div>
+            </div>
+          </div>`;
+        continue;
+      }
+
       const dayTickets = monthTickets
         .filter(t => new Date(t.sugestao1ISO).getDate() === d)
         .sort((a, b) => new Date(a.sugestao1ISO) - new Date(b.sugestao1ISO));
@@ -373,11 +410,22 @@ const AppController = (() => {
       busyContainer.innerHTML = blockedHtml + ticketsHtml;
     }
 
-    // Define horário inicial sugerido dentro das janelas livres (18:00 e 11:30 no dia clicado)
+    // Define horário inicial sugerido dentro das janelas livres (18:00 e 11:30 no dia clicado) e bloqueia datas passadas no seletor
+    const now = new Date();
+    const minTodayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+      now.getDate()
+    ).padStart(2, '0')}T00:00`;
+
     const s1Input = document.getElementById('inputSugestao1');
     const s2Input = document.getElementById('inputSugestao2');
-    if (s1Input) s1Input.value = `${dateIsoYYYYMMDD}T18:00`;
-    if (s2Input) s2Input.value = `${dateIsoYYYYMMDD}T11:30`;
+    if (s1Input) {
+      s1Input.min = minTodayStr;
+      s1Input.value = `${dateIsoYYYYMMDD}T18:00`;
+    }
+    if (s2Input) {
+      s2Input.min = minTodayStr;
+      s2Input.value = `${dateIsoYYYYMMDD}T11:30`;
+    }
 
     // Reseta o estado do modal para a Página 1
     document.getElementById('wizardConfirmPromptBox')?.classList.add('hidden');
@@ -509,7 +557,6 @@ const AppController = (() => {
     const nomeCliente = document.getElementById('inputNomeCliente')?.value.trim();
     const whatsapp = document.getElementById('inputWhatsapp')?.value.trim();
     const ferramentaRemota = document.getElementById('selectFerramentaRemota')?.value || 'Assistência Rápida (Windows)';
-    const idRemoto = document.getElementById('inputIdRemoto')?.value.trim() || '';
     const s1Val = document.getElementById('inputSugestao1')?.value;
     const s2Val = document.getElementById('inputSugestao2')?.value;
     const descricao = document.getElementById('inputDescricaoChamado')?.value.trim();
@@ -524,7 +571,6 @@ const AppController = (() => {
       nomeCliente,
       whatsapp,
       ferramentaRemota,
-      idRemoto,
       servicosCodigos: summary.codigos,
       servicosNomes: summary.nomes,
       descricao: finalDescription,
@@ -564,11 +610,22 @@ const AppController = (() => {
 
   function populateClientDropdowns() {
     const companies = CatalogManager.parseCompaniesCsv().filter(c => c.ativo);
-    const datalist = document.getElementById('listaEmpresasDatalist');
-    if (datalist) {
-      datalist.innerHTML = companies
-        .map(c => `<option value="${escapeHtml(c.nome)}"></option>`)
-        .join('');
+    const selectList = document.getElementById('selectEmpresaLista');
+    const customInput = document.getElementById('selectEmpresaCliente');
+    if (selectList) {
+      const optionsHtml = [
+        ...companies.map(c => `<option value="${escapeHtml(c.nome)}">${escapeHtml(c.nome)}</option>`),
+        `<option value="Casa / Atendimento Particular">🏠 Casa / Atendimento Particular</option>`,
+        `<option value="__OUTRA__">✏️ Outra Empresa / Local (Digitar nome)</option>`
+      ].join('');
+      selectList.innerHTML = optionsHtml;
+
+      if (customInput) {
+        if (!customInput.value || selectList.value !== '__OUTRA__') {
+          customInput.value = selectList.value || (companies[0] ? companies[0].nome : 'Casa / Atendimento Particular');
+          customInput.classList.add('hidden');
+        }
+      }
     }
 
     const services = CatalogManager.parseServicesCsv();
@@ -902,8 +959,8 @@ const AppController = (() => {
               <span class="text-slate-500 block">2ª Sugestão:</span>
               <strong class="text-slate-800">${escapeHtml(t.sugestao2Formatada)}</strong>
               <span class="block text-slate-600 mt-0.5">💻 ${escapeHtml(
-                t.ferramentaRemota
-              )} ${t.idRemoto ? '— ID: ' + escapeHtml(t.idRemoto) : ''}</span>
+                t.ferramentaRemota || 'Assistência Rápida (Windows)'
+              )}</span>
             </div>
           </div>
 

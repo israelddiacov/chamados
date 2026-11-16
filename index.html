@@ -337,15 +337,16 @@
                ================================================================ -->
           <div id="wizardPage3" class="hidden space-y-5">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="min-w-0">
-                <label for="selectEmpresaCliente" class="block text-base font-bold text-slate-800 mb-2">
-                  Sua Empresa <span class="text-blue-600">*</span>
+              <div class="min-w-0 space-y-2">
+                <label for="selectEmpresaLista" class="block text-base font-bold text-slate-800">
+                  Sua Empresa ou Casa <span class="text-blue-600">*</span>
                 </label>
-                <input id="selectEmpresaCliente" type="text" list="listaEmpresasDatalist" required
-                  placeholder="Selecione na lista ou digite sua empresa..."
-                  autocomplete="off"
-                  class="w-full max-w-full min-w-0 px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
-                <datalist id="listaEmpresasDatalist"></datalist>
+                <select id="selectEmpresaLista"
+                  class="w-full max-w-full min-w-0 truncate px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-medium focus:bg-white focus:outline-none focus:border-blue-600">
+                </select>
+                <input id="selectEmpresaCliente" type="text" required
+                  placeholder="Digite o nome da sua empresa ou Casa / Particular..."
+                  class="hidden w-full max-w-full min-w-0 px-4 py-3 rounded-xl bg-white border-2 border-blue-400 text-slate-900 text-base font-medium placeholder-slate-400 focus:outline-none focus:border-blue-600" />
               </div>
 
               <div class="min-w-0">
@@ -360,31 +361,22 @@
                 <label for="inputNomeCliente" class="block text-base font-bold text-slate-800 mb-2">
                   Seu Nome e Setor <span class="text-blue-600">*</span>
                 </label>
-                <input id="inputNomeCliente" type="text" required placeholder="Ex: Marcos (Engenharia)"
+                <input id="inputNomeCliente" type="text" required placeholder="Ex: Marcos (Engenharia) ou Ana (Casa)"
                   class="w-full max-w-full min-w-0 px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
               </div>
 
-              <div class="grid grid-cols-2 gap-3 min-w-0">
-                <div class="min-w-0">
-                  <label for="selectFerramentaRemota" class="block text-base font-bold text-slate-800 mb-2">
-                    Acesso Remoto
-                  </label>
-                  <select id="selectFerramentaRemota"
-                    class="w-full max-w-full min-w-0 truncate px-3 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-semibold focus:bg-white focus:outline-none focus:border-blue-600">
-                    <option value="Assistência Rápida (Windows)" selected>Assistência Rápida (Windows - Recomendado)</option>
-                    <option value="AnyDesk">AnyDesk</option>
-                    <option value="TeamViewer">TeamViewer</option>
-                    <option value="RustDesk">RustDesk</option>
-                    <option value="Google Meet">Google Meet</option>
-                  </select>
-                </div>
-                <div class="min-w-0">
-                  <label for="inputIdRemoto" class="block text-base font-bold text-slate-800 mb-2">
-                    ID (Opcional)
-                  </label>
-                  <input id="inputIdRemoto" type="text" placeholder="Só se usar AnyDesk/TV"
-                    class="w-full max-w-full min-w-0 px-3 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-600" />
-                </div>
+              <div class="min-w-0">
+                <label for="selectFerramentaRemota" class="block text-base font-bold text-slate-800 mb-2">
+                  Acesso Remoto
+                </label>
+                <select id="selectFerramentaRemota"
+                  class="w-full max-w-full min-w-0 truncate px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-base font-semibold focus:bg-white focus:outline-none focus:border-blue-600">
+                  <option value="Assistência Rápida (Windows)" selected>Assistência Rápida (Windows - Recomendado)</option>
+                  <option value="AnyDesk">AnyDesk</option>
+                  <option value="TeamViewer">TeamViewer</option>
+                  <option value="RustDesk">RustDesk</option>
+                  <option value="Google Meet">Google Meet</option>
+                </select>
               </div>
             </div>
 

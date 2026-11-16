@@ -75,6 +75,15 @@ const SchedulerManager = (() => {
     const candEndService = new Date(candidate.endServiceIso).getTime();
     const candEnd = new Date(candidate.endWithBufferIso).getTime();
 
+    // 0. Impede agendamento em datas/horários no passado
+    if (candStart < Date.now()) {
+      return {
+        hasConflict: true,
+        isBlockedWindow: true,
+        message: 'Não é possível agendar um chamado em uma data ou horário que já passou.'
+      };
+    }
+
     // 1. Verifica bloqueios fixos diários (08:00-11:00 e 13:30-17:30)
     const y = candStartDate.getFullYear();
     const m = candStartDate.getMonth();
@@ -137,8 +146,7 @@ const SchedulerManager = (() => {
         empresa: 'RFranco Engenharia',
         nomeCliente: 'Carlos Eduardo (Projetos)',
         whatsapp: '(11) 98765-4321',
-        ferramentaRemota: 'AnyDesk',
-        idRemoto: '482 910 334',
+        ferramentaRemota: 'Assistência Rápida (Windows)',
         servicosCodigos: ['SRV-10', 'SRV-02'],
         servicosNomes: [
           'Autodesk Revit (Instalação Completa + Bibliotecas/Templates BIM e Ativação)',
@@ -158,8 +166,7 @@ const SchedulerManager = (() => {
         empresa: 'RFranco Engenharia',
         nomeCliente: 'Fernanda Lima (Arquitetura)',
         whatsapp: '(11) 97654-3210',
-        ferramentaRemota: 'AnyDesk',
-        idRemoto: '918 220 115',
+        ferramentaRemota: 'Assistência Rápida (Windows)',
         servicosCodigos: ['SRV-09'],
         servicosNomes: ['Autodesk AutoCAD (Instalação Completa, Plotters/Idioma e Ativação)'],
         descricao:
@@ -177,7 +184,6 @@ const SchedulerManager = (() => {
         nomeCliente: 'Roberto Mendes (Comercial)',
         whatsapp: '(11) 96543-2109',
         ferramentaRemota: 'TeamViewer',
-        idRemoto: '1 402 889 120',
         servicosCodigos: ['SRV-05', 'SRV-01'],
         servicosNomes: [
           'Pacote Microsoft Office (Word, Excel, PowerPoint, Outlook - Instalar/Reinstalar)',
@@ -241,7 +247,6 @@ const SchedulerManager = (() => {
       nomeCliente: ticketData.nomeCliente,
       whatsapp: ticketData.whatsapp,
       ferramentaRemota: ticketData.ferramentaRemota || 'Assistência Rápida (Windows)',
-      idRemoto: ticketData.idRemoto || '',
       servicosCodigos: ticketData.servicosCodigos || [],
       servicosNomes: ticketData.servicosNomes || [],
       descricao: ticketData.descricao || '',

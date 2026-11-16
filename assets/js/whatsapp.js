@@ -34,7 +34,7 @@ const WhatsAppManager = (() => {
       `🏢 *Empresa:* ${ticket.empresa}`,
       `👤 *Solicitante:* ${ticket.nomeCliente}`,
       `📱 *WhatsApp:* ${ticket.whatsapp}`,
-      `🖥️ *Acesso:* ${ticket.ferramentaRemota || 'Assistência Rápida (Windows)'}${ticket.idRemoto ? ' (' + ticket.idRemoto + ')' : ''}`,
+      `🖥️ *Acesso:* ${ticket.ferramentaRemota || 'Assistência Rápida (Windows)'}`,
       `🗓️ *Horário:* ${ticket.sugestao1Formatada} (até ${ticket.horaFimComReserva})`,
       ticket.sugestao2Formatada ? `🔄 *2ª Opção:* ${ticket.sugestao2Formatada}` : null,
       ``,
@@ -88,7 +88,7 @@ const WhatsAppManager = (() => {
       `Seu chamado de suporte remoto *${ticket.id}* foi *CONFIRMADO* na agenda! ✅`,
       ``,
       `🗓️ *Data e Horário Confirmado:* ${ticket.sugestao1Formatada}`,
-      `💻 *Conexão Remota:* ${ferramenta}${ticket.idRemoto ? ' (' + ticket.idRemoto + ')' : ''}`,
+      `💻 *Conexão Remota:* ${ferramenta}`,
       isAssistenciaRapida
         ? `💡 *Como conectar:* No horário combinado, pressione *Ctrl + Win + Q* no seu Windows para abrir a Assistência Rápida e digitar o código de 6 dígitos que enviarei aqui.`
         : null,
